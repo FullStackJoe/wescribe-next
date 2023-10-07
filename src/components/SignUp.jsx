@@ -24,7 +24,7 @@ function SignUp() {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      router.push("/pages/mysubscriptions");
+      router.push("/mysubscriptions");
     } catch (e) {
       setError("Failed to create account");
       console.log(e);

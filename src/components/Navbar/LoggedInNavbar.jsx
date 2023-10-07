@@ -53,7 +53,7 @@ const LoggedInNavbar = () => {
         </h1>
         <ul className="uppercase p-4">
           <li className="p-4 border-b border-gray-600">
-            <Link href="/mysubscriptions" onClick={handleNav}>
+            <Link href="/dashboard" onClick={handleNav}>
               Mit overblik
             </Link>
           </li>

@@ -33,7 +33,11 @@ export default function AlternativeSubscriptions() {
   return (
     <>
       <Layout>
-        <h1 className="text-3xl flex justify-center">Alternatives</h1>
+        <h1 className="text-3xl flex justify-center">
+          {!Array.isArray(SubscriptionData)
+            ? "Alternatives"
+            : "You dont have any subscriptions yet :("}{" "}
+        </h1>
         <div className="flex flex-row justify-center">
           <div className="flex flex-col items-center">
             {AltSubscriptionData[0] ? <h2>Dine nuværende abonementer</h2> : ""}

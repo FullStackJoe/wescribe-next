@@ -20,7 +20,7 @@ function Hero() {
           GET THE CHEAPEST SUBSCRIPTIONS TO FULFILL YOUR NEEDS
         </p>
         <button className="bg-[#008B74] hover:bg-blue-700 w-[200px] rounded-md font-medium my-6 mx-auto px-6 text-white">
-          <Link href="pages/signup">Get Started</Link>
+          <Link href="/signup">Get Started</Link>
         </button>
       </div>
     </div>
