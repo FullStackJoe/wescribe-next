@@ -13,7 +13,8 @@ export default function SubscriptionCard({
   const handleDelete = () => {
     // Define the endpoint and the request options
     const url =
-      "http://localhost:3000/api/deleteMobileSubscription/" + subscriptionId;
+      "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/deleteMobileSubscription/" +
+      subscriptionId;
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },

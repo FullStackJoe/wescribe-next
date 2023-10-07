@@ -11,7 +11,7 @@ export default function AlternativeSubscriptions() {
   useEffect(() => {
     // Fetch data when the component mounts
     fetch(
-      "http://localhost:3000/api/getAlternativeSubscriptionByUserId/" +
+      "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/getAlternativeSubscriptionByUserId/" +
         currentUser.uid
     )
       .then((response) => response.json())
@@ -21,7 +21,10 @@ export default function AlternativeSubscriptions() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-    fetch("http://localhost:3000/api/subscriptions/" + currentUser.uid)
+    fetch(
+      "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/subscriptions/" +
+        currentUser.uid
+    )
       .then((response) => response.json())
       .then((fetchedData) => {
         setSubscriptionData(fetchedData);

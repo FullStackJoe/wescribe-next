@@ -23,7 +23,7 @@ export default function MobileSubscriptionForm({
     try {
       // Make a POST request to the endpoint
       const response = await fetch(
-        "http://localhost:3000/api/createMobileSubscription",
+        "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/createMobileSubscription",
         {
           method: "POST",
           headers: {
