@@ -12,11 +12,12 @@ export default function SubscriptionCard({
 }) {
   const handleDelete = () => {
     // Define the endpoint and the request options
-    const url = "http://localhost:5001/api/v1/subscriptions/";
+    const url =
+      "http://localhost:3000/api/deleteMobileSubscription/" + subscriptionId;
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subscriptionId }),
+      body: JSON.stringify({}),
     };
 
     // Send the DELETE request

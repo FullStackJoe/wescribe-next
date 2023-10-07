@@ -23,7 +23,7 @@ export default function MobileSubscriptionForm({
     try {
       // Make a POST request to the endpoint
       const response = await fetch(
-        "http://localhost:5001/api/v1/subscriptions/",
+        "http://localhost:3000/api/createMobileSubscription",
         {
           method: "POST",
           headers: {

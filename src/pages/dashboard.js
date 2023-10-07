@@ -25,7 +25,7 @@ export default function MyOverview() {
 
   useEffect(() => {
     // Fetch data when the component mounts
-    fetch("http://localhost:5001/api/v1/subscriptions/" + currentUser.uid)
+    fetch("http://localhost:3000/api/subscriptions/" + currentUser.uid)
       .then((response) => response.json())
       .then((fetchedData) => {
         setSubscriptionData(fetchedData);

@@ -1,6 +1,6 @@
-// pages/api/getSubscriptionByUserId/[id].js
+// pages/api/getSubscriptionsByUserId/[id].js
 import { pool } from "../../../../db";
-import { getSubscriptionsByUserIdQuery } from "../../../queries";
+import { getSubscriptionsByUserIdQuery } from "../../../../apiQueries";
 
 const getSubscriptionsByUserId = async (req, res) => {
   if (req.method !== "GET") {

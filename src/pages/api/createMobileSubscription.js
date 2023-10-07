@@ -1,8 +1,8 @@
 // pages/api/createMobileSubscription.js
-import { pool } from "../../db";
+import { pool } from "../../../db";
 import { createMobileSubscriptionQuery } from "../../../apiQueries";
 
-export default async (req, res) => {
+const createMobileSubscription = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
@@ -25,3 +25,5 @@ export default async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export default createMobileSubscription;
