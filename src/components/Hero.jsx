@@ -1,5 +1,4 @@
 import React from "react";
-// import Typed from "react-typed";
 import Link from "next/link";
 
 function Hero() {
@@ -14,21 +13,6 @@ function Hero() {
         </h1>
         <div className="flex justify-center items-center">
           <p className="text-[#BD0060] md:text-5xl sm:text-4xl text-xl font-bold py-4">
-            {/* SAVE
-             <Typed
-              className="pl-2 md:pl-4"
-              strings={[
-                "69 KR EACH MONTH",
-                "120 KR EACH MONTH",
-                "249 KR EACH MONTH",
-                "828 KR EACH YEAR",
-                "1440 KR EACH YEAR",
-                "2989 KR EACH YEAR",
-              ]}
-              typeSpeed={140}
-              backSpeed={90}
-              loop
-            /> */}
             SAVE 1999 KR EACH YEAR
           </p>
         </div>
