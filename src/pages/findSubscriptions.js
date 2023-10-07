@@ -12,7 +12,7 @@ export default function AlternativeSubscriptions() {
     // Fetch data when the component mounts
     fetch("/api/getAlternativeSubscriptionByUserId/" + currentUser.uid)
       .then((response) => response.json())
-      .catch.then((fetchedData) => {
+      .then((fetchedData) => {
         console.log(fetchedData); // Add this line
         setAltSubscriptionData(fetchedData);
       })
