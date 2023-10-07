@@ -16,4 +16,6 @@ const pool = new Pool({
   connectionString: process.env.POSTGRES_URL + "?sslmode=require",
 });
 
-export default pool;
+module.exports = {
+  pool,
+};
