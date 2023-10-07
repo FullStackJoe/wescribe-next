@@ -10,10 +10,7 @@ export default function AlternativeSubscriptions() {
 
   useEffect(() => {
     // Fetch data when the component mounts
-    fetch(
-      "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/getAlternativeSubscriptionByUserId/" +
-        currentUser.uid
-    )
+    fetch("/api/getAlternativeSubscriptionByUserId/" + currentUser.uid)
       .then((response) => response.json())
       .then((fetchedData) => {
         setAltSubscriptionData(fetchedData);
@@ -21,10 +18,7 @@ export default function AlternativeSubscriptions() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-    fetch(
-      "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/subscriptions/" +
-        currentUser.uid
-    )
+    fetch("/api/subscriptions/" + currentUser.uid)
       .then((response) => response.json())
       .then((fetchedData) => {
         setSubscriptionData(fetchedData);

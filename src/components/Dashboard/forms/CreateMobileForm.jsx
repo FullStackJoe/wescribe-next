@@ -22,16 +22,13 @@ export default function MobileSubscriptionForm({
 
     try {
       // Make a POST request to the endpoint
-      const response = await fetch(
-        "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/createMobileSubscription",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("/api/createMobileSubscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (response.ok) {
         // Data was successfully sent

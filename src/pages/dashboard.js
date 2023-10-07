@@ -25,10 +25,7 @@ export default function MyOverview() {
 
   useEffect(() => {
     // Fetch data when the component mounts
-    fetch(
-      "https://wescribe-next-k9rm-pcu0h0xev-johan-nielsens-projects.vercel.app/api/subscriptions/" +
-        currentUser.uid
-    )
+    fetch("/api/subscriptions/" + currentUser.uid)
       .then((response) => response.json())
       .then((fetchedData) => {
         setSubscriptionData(fetchedData);
