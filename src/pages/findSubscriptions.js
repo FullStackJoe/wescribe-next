@@ -11,11 +11,11 @@ export default function AlternativeSubscriptions() {
   useEffect(() => {
     // Fetch data when the component mounts
     fetch("/api/getAlternativeSubscriptionByUserId/" + currentUser.uid)
-      .then((fetchedData) => {
+      .then((response) => response.json())
+      .catch.then((fetchedData) => {
         console.log(fetchedData); // Add this line
         setAltSubscriptionData(fetchedData);
       })
-      .then((response) => response.json())
       .then((fetchedData) => {
         setAltSubscriptionData(fetchedData);
       })
@@ -24,6 +24,10 @@ export default function AlternativeSubscriptions() {
       });
     fetch("/api/subscriptions/" + currentUser.uid)
       .then((response) => response.json())
+      .then((fetchedData) => {
+        console.log(fetchedData); // Add this line
+        setAltSubscriptionData(fetchedData);
+      })
       .then((fetchedData) => {
         setSubscriptionData(fetchedData);
       })
