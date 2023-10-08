@@ -5,7 +5,13 @@ import styles from "./CreateModal.module.css";
 // import BroadbandForm from "./forms/BroadbandForm";
 // import StreamingForm from "./forms/StreamingForm";
 
-const CreateModal = ({ userId, isOpen, onClose, onSubmitSuccess }) => {
+const CreateModal = ({
+  toggleEditMode,
+  userId,
+  isOpen,
+  onClose,
+  onSubmitSuccess,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState("default");
   const [showDropdowns, setShowDropdowns] = useState(false);
 
@@ -14,6 +20,7 @@ const CreateModal = ({ userId, isOpen, onClose, onSubmitSuccess }) => {
       case "Mobilabonnement":
         return (
           <CreateMobileForm
+            toggleEditMode={toggleEditMode}
             userId={userId}
             onClose={onClose}
             onSubmitSuccess={onSubmitSuccess}
@@ -43,7 +50,7 @@ const CreateModal = ({ userId, isOpen, onClose, onSubmitSuccess }) => {
       <>
         <div className={styles.aboform}>
           <div className={styles.modal_content}>
-            <div className="card-actions justify-end">
+            <div className="card-actions flex justify-end p-4">
               <button
                 className="btn btn-square btn-sm close-button"
                 onClick={onClose}

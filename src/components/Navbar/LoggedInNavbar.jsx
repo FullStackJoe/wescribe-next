@@ -21,7 +21,7 @@ const LoggedInNavbar = () => {
   }
 
   return (
-    <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px4">
+    <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px4 font-medium text-lg">
       <h1 className="w-full text-3xl font-bold text-[#BD0060] m-4">
         <Link href="/">WESCRIBE.</Link>
       </h1>
@@ -58,7 +58,7 @@ const LoggedInNavbar = () => {
             </Link>
           </li>
           <li className="p-4 border-b border-gray-600">
-            <Link href="/" onClick={handleNav}>
+            <Link href="/findSubscriptions" onClick={handleNav}>
               Abbonement Scanner
             </Link>
           </li>

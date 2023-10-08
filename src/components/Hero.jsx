@@ -13,15 +13,18 @@ function Hero() {
         </h1>
         <div className="flex justify-center items-center">
           <p className="text-[#BD0060] md:text-5xl sm:text-4xl text-xl font-bold py-4">
-            SAVE 1999 KR EACH YEAR
+            SAVE MONEY EACH MONTH
           </p>
         </div>
         <p className="md:text-2xl text-xl font-bold text-white">
-          GET THE CHEAPEST SUBSCRIPTIONS TO FULFILL YOUR NEEDS
+          GET THE CHEAPEST SUBSCRIPTIONS
         </p>
-        <button className="bg-[#008B74] hover:bg-blue-700 w-[200px] rounded-md font-medium my-6 mx-auto px-6 text-white">
-          <Link href="/signup">Get Started</Link>
-        </button>
+
+        <Link href="/signup">
+          <button className="bg-[#008B74] hover:bg-blue-700 w-[200px] rounded-md font-medium my-6 mx-auto px-6 text-white">
+            Get Started
+          </button>
+        </Link>
       </div>
     </div>
   );

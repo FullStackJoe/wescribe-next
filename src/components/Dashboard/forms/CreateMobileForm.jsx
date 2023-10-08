@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 export default function MobileSubscriptionForm({
+  toggleEditMode,
   userId,
   onClose,
   onSubmitSuccess,
@@ -9,8 +10,27 @@ export default function MobileSubscriptionForm({
   const [data, setData] = useState("");
   const [talktime, setTalktime] = useState("");
   const [price, setPrice] = useState("");
+  const [erroMsg, setErrormsg] = useState("");
 
   const submit = async () => {
+    if (provider == "") {
+      setErrormsg("Vælg venligst en udbuder");
+      return;
+    }
+    if (data == "") {
+      setErrormsg("Angiv venligst data mængde");
+      return;
+    }
+    if (talktime == "") {
+      setErrormsg("Angiv venligst taletid");
+      return;
+    }
+    if (price == "") {
+      setErrormsg("Angiv venligst en pris");
+      return;
+    }
+
+    toggleEditMode();
     // Create a JSON object with the selected data
     const formData = {
       Provider: provider,
@@ -105,9 +125,12 @@ export default function MobileSubscriptionForm({
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
+        {/*   
         <div>
           <input type="checkbox" className="toggle" checked />
         </div>
+        */}
+        <p>{erroMsg}</p>
         <button
           onClick={submit}
           class="bg-[#008B74] hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 mx-2 rounded inline-flex items-center mt-4"

@@ -58,7 +58,6 @@ const getAlternativeSubscriptionByUserId = async (req, res) => {
   const { id } = req.query;
 
   try {
-    console.log(getSubscriptionsByUserIdQuery);
     const { rows } = await pool.query(getSubscriptionsByUserIdQuery, [id]);
     const alternativeSubs = await getListOfAlternativeSubs(rows);
     res.status(200).json(alternativeSubs);

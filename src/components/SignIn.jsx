@@ -64,7 +64,7 @@ function SignIn() {
         <div className=" flex justify-center">
           <p>
             Don&apos;t have an account yet?
-            <Link href="/pages/signup"> Sign Up</Link>
+            <Link href="/signup"> Sign Up</Link>
           </p>
         </div>
       </div>

@@ -1,14 +1,17 @@
+import Login from "./login";
+import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import SubscriptionCard from "@/components/Dashboard/SubscriptionCard";
 import OverviewCard from "@/components/Dashboard/OverviewCard";
 import CreateModal from "@/components/Dashboard/CreateModal";
 import { useAuth } from "@/firebase/AuthContext";
 import Layout from "@/components/layout";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function MyOverview() {
+export default function Dashboard() {
   const { currentUser, logout } = useAuth();
   const [SubscriptionData, setSubscriptionData] = useState([]);
-  const [loading, setLoading] = useState(true); /* Is not used */
+  const [loading, setLoading] = useState(true);
   const [yearly, setYearly] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -24,6 +27,11 @@ export default function MyOverview() {
   };
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    setLoading(true);
     // Fetch data when the component mounts
     fetch("/api/subscriptions/" + currentUser.uid)
       .then((response) => response.json())
@@ -110,88 +118,134 @@ export default function MyOverview() {
     setYearly(false); // Toggle the value of yearly
   };
 
-  yearClassnames =
+  var yearClassnames =
     "bg-custom-black hover:bg-blue-600 text-s font-bold w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1";
-  monthClassnames =
+  var monthClassnames =
     "bg-#2f2f2f hover:bg-blue-600 text-s font-bold w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1";
-  var yearClassnames;
 
-  var monthClassnames;
+  if (!currentUser) {
+    return <Login />;
+  }
 
   return (
     <>
+      <Head>
+        <title>WeScribe - Dit overblik</title>
+      </Head>
       <Layout>
         <div className="flex flex-col items-center ">
           <h1 className="text-xl md:text-3xl p-2">Overblik over dit forbrug</h1>
           <span className="border-b-2 border-white h-1 w-10/12 md:w-8/12"></span>
-          <div className="flex flex-row w-6/12 justify-center">
-            <button
-              className={`border-${
-                yearly ? "black" : "2"
-              }   text-s font-bold border-black border-b-0 w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1'}`}
-              onClick={onClickMonth}
-            >
-              Måned
-            </button>
-            <button
-              className={`border-${
-                yearly ? "2" : "black"
-              }  text-s border-b-0 font-bold border-black w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1'}`}
-              onClick={onClickYear}
-            >
-              År
-            </button>
-          </div>
-          <div className="flex flex-col w-full md:flex-row">
-            <div className="flex justify-center m-auto w-full md:w-10/12">
-              <OverviewCard {...overviewProps()} />
-            </div>
-          </div>
+          {loading ? (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#BD0060"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            <>
+              <div className="flex flex-col items-center w-full">
+                <div className="flex flex-row w-6/12 justify-center">
+                  <button
+                    className={`border-${
+                      yearly ? "black" : "2"
+                    }   text-s font-bold border-black border-b-0 w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1'}`}
+                    onClick={onClickMonth}
+                  >
+                    Måned
+                  </button>
+                  <button
+                    className={`border-${
+                      yearly ? "2" : "black"
+                    }  text-s border-b-0 font-bold border-black w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1'}`}
+                    onClick={onClickYear}
+                  >
+                    År
+                  </button>
+                </div>
+                <div className="flex flex-col w-full md:flex-row">
+                  <div className="flex justify-center m-auto w-full md:w-10/12">
+                    <OverviewCard {...overviewProps()} />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
           <h1 className="text-xl md:text-3xl p-2">Dine abonementer</h1>{" "}
           <span className="border-b-2 border-white h-1 w-10/12 md:w-8/12"></span>
-          <div>
-            {SubscriptionData[0] ? (
-              <button
-                onClick={toggleEditMode}
-                class="bg-[#008B74] hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 mx-2 rounded inline-flex items-center mt-5 "
-              >
-                <span>
-                  {editMode ? "Gem ændringer" : "Rediger abonnementer"}
-                </span>
-              </button>
-            ) : (
-              ""
-            )}
-
-            {editMode || !SubscriptionData[0] ? (
-              <button
-                onClick={openModal}
-                class="bg-[#008B74] hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 mx-2 rounded inline-flex items-center mt-4"
-              >
-                <span>Tilføj abbonement</span>
-              </button>
-            ) : (
-              ""
-            )}
-          </div>
-          <div className="flex flex-wrap justify-center">
-            {SubscriptionData.map((item) =>
-              item.type === "Mobile" ? (
-                <div className="px-6 py-5" key={item.subscriptionid}>
-                  <SubscriptionCard
-                    provider={item.provider}
-                    talk={item.talktime === 9999 ? "FRI" : item.talktime}
-                    data={item.datamonth === 9999 ? "FRI" : item.datamonth}
-                    monthlyPrice={parseInt(item.pricemonth)}
-                    editMode={editMode}
-                    subscriptionId={item.subscriptionid}
-                    onSubmitSuccess={handleSuccess}
-                  />
+          {loading ? (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#BD0060"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : (
+            <>
+              {/* div for subCards + buttons */}
+              <div className="flex flex-col items-center ">
+                <div>
+                  {/* Button for editing subs (if user has subs) */}
+                  {SubscriptionData[0] ? (
+                    <button
+                      onClick={toggleEditMode}
+                      class="bg-[#008B74] hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 mx-2 rounded inline-flex items-center mt-5 "
+                    >
+                      <span>
+                        {editMode
+                          ? "Gem ændringer"
+                          : "Tilføj & Rediger abonnementer"}
+                      </span>
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {/* Button for adding subs (if user has NO subs or entered editing mode) */}
+                  {editMode || !SubscriptionData[0] ? (
+                    <button
+                      onClick={openModal}
+                      class="bg-[#008B74] hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 mx-2 rounded inline-flex items-center mt-4"
+                    >
+                      <span>Tilføj abbonement</span>
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              ) : null
-            )}
-          </div>
+                <div className="flex flex-wrap justify-center">
+                  {SubscriptionData.map((item) =>
+                    item.type === "Mobile" ? (
+                      <div className="px-6 py-5" key={item.subscriptionid}>
+                        <SubscriptionCard
+                          setSubscriptionData={setSubscriptionData}
+                          setLoading={setLoading}
+                          provider={item.provider}
+                          talk={item.talktime === 9999 ? "FRI" : item.talktime}
+                          data={
+                            item.datamonth === 9999 ? "FRI" : item.datamonth
+                          }
+                          monthlyPrice={parseInt(item.pricemonth)}
+                          editMode={editMode}
+                          subscriptionId={item.subscriptionid}
+                        />
+                      </div>
+                    ) : null
+                  )}
+                </div>
+              </div>
+            </>
+          )}
           <CreateModal
+            toggleEditMode={toggleEditMode}
             userId={currentUser.uid}
             isOpen={isModalOpen}
             onClose={closeModal}

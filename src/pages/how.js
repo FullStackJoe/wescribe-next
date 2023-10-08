@@ -1,8 +1,12 @@
 import Layout from "@/components/layout";
+import Head from "next/head";
 
 export default function How() {
   return (
     <>
+      <Head>
+        <title>WeScribe - Guide</title>
+      </Head>
       <Layout>
         <h1 className="text-white text-3xl flex justify-center">
           How it works

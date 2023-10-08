@@ -2,15 +2,17 @@ import React from "react";
 import Image from "next/image";
 
 export default function SubscriptionCard({
+  setLoading,
+  setSubscriptionData,
   provider,
   data,
   talk,
   monthlyPrice,
   editMode,
   subscriptionId,
-  onSubmitSuccess,
 }) {
   const handleDelete = () => {
+    setLoading(true);
     // Define the endpoint and the request options
     const url = "/api/deleteMobileSubscription/" + subscriptionId;
     const requestOptions = {
@@ -23,17 +25,17 @@ export default function SubscriptionCard({
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        // Here you can handle the response, for example:
-        // - Show a success message
-        // - Remove the item from the UI
-        // - Etc.
+        setSubscriptionData((prevSubscriptionData) =>
+          prevSubscriptionData.filter(
+            (item) => item.subscriptionid !== subscriptionId
+          )
+        );
       })
+      .then(() => setLoading(false))
       .catch((error) => {
         console.error("There was an error deleting the subscription:", error);
         // Handle the error appropriately
       });
-    onSubmitSuccess();
   };
 
   return (
