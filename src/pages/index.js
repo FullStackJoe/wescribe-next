@@ -13,20 +13,21 @@ export default function Home() {
       </Head>
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="flex flex-col items-start justify-center min-h-screen p-4 mx-20">
-          {/* Added profile picture */}
           <div className="rounded-full border border-gray-300 overflow-hidden mb-4">
             <Link href="https://www.linkedin.com/in/johan-hyldig-nielsen-abb1b5b9/">
               <Image
                 priority
-                src="/images/profile.jpeg" // Updated image URL
+                src="/images/profile.jpeg"
                 alt="Profile Picture"
-                width={128} // Specify the width
-                height={128} // Specify the height
-                className="rounded-full" // Make the image round
+                width={128}
+                height={128}
+                className="rounded-full"
               />
             </Link>
           </div>
-          <h1 className="text-4xl font-bold my-2">Velkommen til WeScribe</h1>
+          <h1 className="text-4xl font-bold my-2">
+            Velkommen til <span className="text-[#BD0060]">WeScribe.</span>
+          </h1>
           <h2 className="text-3xl">
             Et projekt udarbejdet af{" "}
             <Link href="https://www.linkedin.com/in/johan-hyldig-nielsen-abb1b5b9/">
