@@ -33,7 +33,7 @@ export default function Home() {
               Johan Hyldig Nielsen
             </Link>
           </h2>
-          <p className="text-xl m-1">
+          <p className="text-xl my-1">
             Både frontend og backend er lavet id Next.js(React), og der er en
             PostgreSQL db.
           </p>
@@ -42,7 +42,7 @@ export default function Home() {
             og bliver præsenteret for billigere alternativer
           </p>
           <div className="flex flex-col items-start">
-            <p className="text-xl m-1">
+            <p className="text-xl my-1">
               {" "}
               - Opret en bruger (eller log in med test@test.dk pass: 123456)
             </p>
