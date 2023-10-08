@@ -23,8 +23,9 @@ export default function Profile() {
     <>
       <div className="flex">
         <div className="border-2 border-gray-700 flex flex-col justify-center items-center rounded-3xl px-5 py-5 m-auto">
-          <h2 className="text-3xl flex justify-center">Profile</h2>
+          <h2 className="font-bold">PROFILSIDEN ER WORK IN PROGRESS</h2>
           <br />
+          <h2 className="text-3xl flex justify-center">Profile</h2>
           <p className="flex">
             Email: {currentUser ? currentUser.email : "Not logged in"}
           </p>
