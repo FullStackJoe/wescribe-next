@@ -149,7 +149,7 @@ export default function Dashboard() {
             />
           ) : (
             <>
-              <div className="flex flex-col items-center w-full">
+              <div className="flex flex-col items-center w-full mt-4">
                 <div className="flex flex-row w-6/12 justify-center">
                   <button
                     className={`border-${
@@ -176,7 +176,7 @@ export default function Dashboard() {
               </div>
             </>
           )}
-          <h1 className="text-xl md:text-3xl p-2">Dine abonementer</h1>{" "}
+          <h1 className="text-xl md:text-3xl p-2 mt-12">Dine abonementer</h1>{" "}
           <span className="border-b-2 border-white h-1 w-10/12 md:w-8/12"></span>
           {loading ? (
             <ThreeDots

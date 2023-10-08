@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import { useAuth } from "@/firebase/AuthContext";
 
 function Hero() {
+  const { currentUser, logout } = useAuth();
+  const getStartedHref = currentUser ? "/dashboard" : "/signup";
+
   return (
     <div className="">
       <div className="max-w-[800px] mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center">
@@ -20,7 +24,7 @@ function Hero() {
           GET THE CHEAPEST SUBSCRIPTIONS
         </p>
 
-        <Link href="/signup">
+        <Link href={getStartedHref}>
           <button className="bg-[#008B74] hover:bg-blue-700 w-[200px] rounded-md font-medium my-6 mx-auto px-6 text-white">
             Get Started
           </button>

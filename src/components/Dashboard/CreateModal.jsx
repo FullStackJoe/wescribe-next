@@ -50,7 +50,7 @@ const CreateModal = ({
       <>
         <div className={styles.aboform}>
           <div className={styles.modal_content}>
-            <div className="card-actions flex justify-end p-4">
+            <div className="card-actions flex justify-end">
               <button
                 className="btn btn-square btn-sm close-button"
                 onClick={onClose}
@@ -73,7 +73,7 @@ const CreateModal = ({
             </div>
 
             <div className="flex flex-col items-center">
-              <h2 className="m-auto text-2xl">Nyt Abonnement</h2>
+              <h2 className="m-auto text-2xl font-bold">Nyt Abonnement</h2>
               <select
                 className="select select-bordered border-black select-sm w-full max-w-xs mt-3"
                 value={selectedCategory}

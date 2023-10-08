@@ -1,7 +1,6 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import SubscriptionCard from "@/components/Dashboard/SubscriptionCard";
 import { useAuth } from "@/firebase/AuthContext";
 import Layout from "@/components/layout";
 import HasNoSubs from "@/components/Dashboard/Alternatives/HasNoSubs";
@@ -13,32 +12,41 @@ export default function AlternativeSubscriptions() {
   const [AltSubscriptionData, setAltSubscriptionData] = useState([]);
   const [SubscriptionData, setSubscriptionData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [altLoading, setAltLoading] = useState(true);
 
   useEffect(() => {
     if (!currentUser) {
       return;
     }
     setLoading(true);
-    // Fetch data when the component mounts
-    fetch("/api/getAlternativeSubscriptionByUserId/" + currentUser.uid)
-      .then((response) => response.json())
-      .then((fetchedData) => {
-        setAltSubscriptionData(fetchedData);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
     fetch("/api/subscriptions/" + currentUser.uid)
       .then((response) => response.json())
       .then((fetchedData) => {
         setSubscriptionData(fetchedData);
+        return Promise.all(
+          fetchedData.map((sub) =>
+            fetch("/api/getAlternativeSub/" + sub.subscriptionid)
+              .then((response) => response.json())
+              .then((alternativeData) => {
+                // Create a new array with the original subscription at index 0 and the alternatives at indices 1-3
+                return [sub].concat(alternativeData);
+              })
+          )
+        );
+      })
+      .then((groupedDataArray) => {
+        setAltSubscriptionData(groupedDataArray);
         setLoading(false);
+        setAltLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setLoading(false);
+        setAltLoading(false);
       });
   }, []);
+
+  console.log(AltSubscriptionData);
 
   if (!currentUser) {
     return <Login />;
@@ -51,7 +59,7 @@ export default function AlternativeSubscriptions() {
       </Head>
       <Layout>
         {/* Show loading animation while fetching*/}
-        {loading ? (
+        {loading || altLoading ? (
           <div className="flex justify-center">
             <ThreeDots
               height="80"

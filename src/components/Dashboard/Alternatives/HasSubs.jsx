@@ -3,6 +3,7 @@ import SubscriptionCard from "@/components/Dashboard/SubscriptionCard";
 import AlternativesMobile from "./AlternativesMobile";
 
 function HasSubs({ AltSubscriptionData, SubscriptionData }) {
+  console.log(AltSubscriptionData);
   return (
     <>
       <h1 className="text-center text-3xl">Mobil</h1>

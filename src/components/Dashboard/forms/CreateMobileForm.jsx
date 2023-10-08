@@ -11,10 +11,12 @@ export default function MobileSubscriptionForm({
   const [talktime, setTalktime] = useState("");
   const [price, setPrice] = useState("");
   const [erroMsg, setErrormsg] = useState("");
+  const [isTalktimeCheked, setIsTalktimeCheked] = useState(false);
+  const [isDataCheked, setIsisDataCheked] = useState(false);
 
   const submit = async () => {
     if (provider == "") {
-      setErrormsg("Vælg venligst en udbuder");
+      setErrormsg("Vælg venligst en udbyder");
       return;
     }
     if (data == "") {
@@ -68,11 +70,30 @@ export default function MobileSubscriptionForm({
       console.error("Error:", error);
     }
   };
+
+  const handleTalktimeCheked = () => {
+    setIsTalktimeCheked((prev) => !prev);
+    if (!isTalktimeCheked) {
+      setTalktime(9999);
+    } else {
+      setTalktime("");
+    }
+  };
+
+  const handleDataCheked = () => {
+    setIsisDataCheked((prev) => !prev);
+    if (!isDataCheked) {
+      setData(9999);
+    } else {
+      setData("");
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center pt-3 w-10/12">
-          <p>Udbyder</p>
+          <p className="font-bold">Udbyder</p>
           <select
             className="select select-bordered border-black select-sm w-full max-w-xs"
             onChange={(e) => setProvider(e.target.value)}
@@ -81,43 +102,59 @@ export default function MobileSubscriptionForm({
             <option disabled value="">
               Vælg
             </option>
-            <option value="Yousee">CallMe</option>
-            <option value="Telia">CBB Mobil</option>
-            <option value="Telenor">Oister</option>
+            <option value="CallMe">CallMe</option>
+            <option value="Oister">Oister</option>
             <option value="Telmore">Telmore</option>
-            <option value="CallMe">Telia</option>
-            <option value="CallMe">Telenor</option>
-            <option value="CallMe">OK</option>
-            <option value="CallMe">Eesy</option>
-            <option value="CallMe">YouSee</option>
-            <option value="CallMe">Lebara</option>
-            <option value="CallMe">Flexii</option>
-            <option value="CallMe">GreenTel</option>
-            <option value="CallMe">Alka Mobil</option>
-            <option value="CallMe">Duka</option>
+            <option value="Telia">Telia</option>
+            <option value="Telenor">Telenor</option>
+            <option value="OK">OK</option>
+            <option value="Eesy">Eesy</option>
+            <option value="YouSee">YouSee</option>
+            <option value="Lebara">Lebara</option>
+            <option value="Flexii">Flexii</option>
+            <option value="Duka">Duka</option>
           </select>
         </div>
         <div className="flex flex-col items-center pt-3 w-2/12">
-          <p>Data</p>
-
+          <div>
+            <p className="font-bold">Data</p>
+            Fri {"  "}
+            <input
+              type="checkbox"
+              checked={isDataCheked}
+              onClick={handleDataCheked}
+              className="toggle ml-2"
+            />
+          </div>
           <input
             type="text"
+            disabled={isDataCheked}
             placeholder="GB"
             className="input border-black input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setData(e.target.value)}
           />
         </div>
         <div className="flex flex-col items-center pt-3 w-2/12">
-          <p>Tale</p>
+          <div>
+            <p className="font-bold">Taletid</p>
+            Fri {"  "}
+            <input
+              type="checkbox"
+              checked={isTalktimeCheked}
+              onClick={handleTalktimeCheked}
+              className="toggle ml-2"
+            />
+          </div>
           <input
             type="text"
+            disabled={isTalktimeCheked}
             placeholder="timer"
             className="input border-black input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setTalktime(e.target.value)}
           />
         </div>
         <div className="flex flex-col items-center pt-3 w-2/12">
-          <p>Pris / md</p>
+          <p className="font-bold">Pris / md</p>
           <input
             type="text"
             placeholder="kr"

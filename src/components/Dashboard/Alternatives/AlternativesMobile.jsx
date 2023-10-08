@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import SubscriptionCard from "../SubscriptionCard";
 import NoCheaperSubs from "./NoCheaperSubs";
 
 function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
+  const [currentSubscriptionIndices, setCurrentSubscriptionIndices] = useState(
+    Array(AltSubscriptionData.length).fill(1) // Initial indices are 1 to show the first alternative subscription
+  );
+  const [isLoading, setIsLoading] = useState(true);
+
+  const changeSubProposal = (arrayIndex) => {
+    setCurrentSubscriptionIndices((prevIndices) => {
+      const newIndices = [...prevIndices];
+      newIndices[arrayIndex] =
+        newIndices[arrayIndex] + 1 > 3 ? 1 : newIndices[arrayIndex] + 1; // Cycle back to 1 if the index goes beyond 3
+      return newIndices;
+    });
+  };
+
   return (
     <div className="flex flex-row justify-center">
-      {SubscriptionData.length == 0 ? (
+      {!SubscriptionData.length == 0 ? (
         <>
           <div className="flex flex-col items-center">
             <h2 className="font-bold">Dine nuværende abonementer</h2>
             {/*Print a subscription, if sub is of type mobile*/}
-            <div className="flex flex-wrap justify-center">
+            <div className="flex flex-col items-center">
               {SubscriptionData.map((item) =>
                 item.type === "Mobile" ? (
-                  <div className="px-6 py-5" key={item.subscriptionid}>
+                  <div className="px-6 py-5 mb-8" key={item.subscriptionid}>
                     <SubscriptionCard
                       provider={item.provider}
                       talk={item.talktime === 9999 ? "FRI" : item.talktime}
@@ -38,30 +52,55 @@ function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
         */}
             </div>
           </div>
-          <div className="flex flex-col items-center">
-            <h2 className="font-bold">Forslag til nye abonementer</h2>
 
-            <div className="flex flex-wrap justify-center">
-              {AltSubscriptionData.map((item) =>
-                item[0].type === "Mobile" ? (
-                  <div className="px-6 py-5" key={item.subscriptionid}>
-                    <SubscriptionCard
-                      provider={item[0].provider}
-                      talk={
-                        item[0].talktime === 9999 ? "FRI" : item[0].talktime
-                      }
-                      data={
-                        item[0].datamonth === 9999 ? "FRI" : item[0].datamonth
-                      }
-                      monthlyPrice={parseInt(item[0].pricemonth)}
-                      editMode={""}
-                      subscriptionId={item[0].subscriptionid}
-                      onSubmitSuccess={""}
-                    />
-                  </div>
-                ) : null
-              )}
-            </div>
+          <div className="flex flex-col flex-wrap items-center">
+            <h2 className="font-bold mb-5">
+              Forslag til billigere abonementer
+            </h2>
+            {AltSubscriptionData.map((subArray, arrayIndex) => (
+              <div key={arrayIndex} className="flex flex-col items-center mb-5">
+                {/* Show only one subscription based on currentSubscriptionIndices */}
+                {subArray[currentSubscriptionIndices[arrayIndex]] && (
+                  <SubscriptionCard
+                    provider={
+                      subArray[currentSubscriptionIndices[arrayIndex]].provider
+                    }
+                    talk={
+                      subArray[currentSubscriptionIndices[arrayIndex]]
+                        .talktime === 9999
+                        ? "FRI"
+                        : subArray[currentSubscriptionIndices[arrayIndex]]
+                            .talktime
+                    }
+                    data={
+                      subArray[currentSubscriptionIndices[arrayIndex]]
+                        .datamonth === 9999
+                        ? "FRI"
+                        : subArray[currentSubscriptionIndices[arrayIndex]]
+                            .datamonth
+                    }
+                    monthlyPrice={parseInt(
+                      subArray[currentSubscriptionIndices[arrayIndex]]
+                        .pricemonth
+                    )}
+                    editMode={""}
+                    subscriptionId={
+                      subArray[currentSubscriptionIndices[arrayIndex]]
+                        .subscriptionid
+                    }
+                    onSubmitSuccess={""}
+                  />
+                )}
+                <div className="mt-4">
+                  <button
+                    onClick={() => changeSubProposal(arrayIndex)}
+                    className="bg-[#008B74] hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 rounded inline-flex items-center"
+                  >
+                    Vis nyt abonnement
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </>
       ) : (

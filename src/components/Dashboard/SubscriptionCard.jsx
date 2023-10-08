@@ -40,8 +40,9 @@ export default function SubscriptionCard({
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center ">
-        <div className="relative flex flex-row items-center  border-2 border-gray-500 rounded-md p-5">
+      <div className="flex flex-col justify-between items-center w-[365px]">
+        <div className="relative flex flex-row items-center border-2 border-gray-500 rounded-md p-5 w-full">
+          {/* ...rest of your code... */}
           {editMode ? (
             <Image
               className="absolute top-0 right-0 transform -translate-y-3 translate-x-3"
@@ -55,23 +56,25 @@ export default function SubscriptionCard({
             ""
           )}
 
-          <div className="flex flex-grow">
-            <p className="text-4xl">{provider}</p>
+          <div className="flex w-6/12 h-full items-center">
+            <p className="text-xl">{provider}</p>
           </div>
-          <div className="flex flex-row items-center pl-8 md:pl-12">
-            <div className="border-gray-400 border-r-2 pr-3 flex flex-col items-center">
+          <div className="flex flex-row items-center pl-6">
+            <div className="border-gray-400 border-r-2 pr-3 flex flex-col items-center text-sm w-[80px]">
               <p>Data</p>
-              <p className="text-2xl">
-                {data} {data !== "FRI" ? " GB" : ""}
+              <p className="text-xl">
+                {data}
+                {data !== "FRI" ? " GB" : ""}
               </p>
             </div>
-            <div className="pl-5 flex flex-col items-center">
-              <p>Tale</p>
-              <p className="text-2xl">{talk}</p>
+            <div className="pl-5 flex flex-col items-center text-sm w-[45px]">
+              <p>Timer</p>
+              <p className="text-xl">{talk}</p>
+              <p></p>
             </div>
           </div>
-          <div className="pl-8 md:pl-12 flex flex-col items-center">
-            <p className="text-2xl text-[#BD0060]">{monthlyPrice}</p>{" "}
+          <div className="pl-8 md:pl-12 flex flex-col items-center w-[200px]">
+            <p className="text-xl text-[#BD0060]">{monthlyPrice}</p>{" "}
             <p className="text-[#BD0060]">kr / md</p>
           </div>
         </div>

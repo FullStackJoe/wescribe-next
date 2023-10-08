@@ -1,3 +1,5 @@
+// THIS ENDPOINT IS NOT IN USE!
+
 // pages/api/getAlternativeSubscriptionByUserId.js
 import { pool } from "../../../../db";
 import {
