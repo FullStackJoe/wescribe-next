@@ -8,9 +8,7 @@ export default function How() {
         <title>WeScribe - Guide</title>
       </Head>
       <Layout>
-        <h1 className="text-white text-3xl flex justify-center">
-          How it works
-        </h1>
+        <h1 className="text-3xl flex justify-center">How it works</h1>
       </Layout>
     </>
   );

@@ -53,8 +53,15 @@ export default function Home() {
               Bemærk: WeScribe er stadig work in progress, så visse funktioner
               er ikke klar endnu
             </h2>
-            <Link href="/home" className="text-[#BD0060] font-bold">
-              Klik her for at komme til siden
+            <Link
+              href="https://github.com/FullStackJoe/wescribe-next"
+              className="text-[#BD0060] font-bold"
+            >
+              Klik her for at komme til git-repository
+            </Link>
+            <h2></h2>
+            <Link href="/home" className="text-[#BD0060] my-4 font-bold">
+              Klik her for at komme til WeScribe.dk
             </Link>
           </div>
         </div>

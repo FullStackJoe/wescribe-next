@@ -8,7 +8,7 @@ export default function About() {
         <title>WeScribe - Om os</title>
       </Head>
       <Layout>
-        <h1 className="text-white text-3xl flex justify-center">About</h1>
+        <h1 className="text-3xl flex justify-center">About</h1>
       </Layout>
     </>
   );
