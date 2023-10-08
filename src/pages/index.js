@@ -33,6 +33,10 @@ export default function Home() {
               Johan Hyldig Nielsen
             </Link>
           </h2>
+          <p className="text-xl m-1">
+            Både frontend og backend er lavet id Next.js(React), og der er en
+            PostgreSQL db.
+          </p>
           <p className="text-xl my-2">
             WeScribe er stedet du får et overblik over alle dine aboennementer,
             og bliver præsenteret for billigere alternativer
