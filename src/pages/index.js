@@ -35,7 +35,7 @@ export default function Home() {
             </Link>
           </h2>
           <p className="md:text-xl my-1 mb-6">
-            Font end er lavet i Next.js (React) - Backend er lavet i Next.js og
+            Fontend er lavet i Next.js (React) - Backend er lavet i Next.js og
             postgreSQL.
           </p>
           <p className="md:text-xl my-1 font-bold">
