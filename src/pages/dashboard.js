@@ -12,7 +12,6 @@ export default function Dashboard() {
   const { currentUser, logout } = useAuth();
   const [SubscriptionData, setSubscriptionData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [yearly, setYearly] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [editMode, setEditMode] = useState(false);
@@ -49,79 +48,9 @@ export default function Dashboard() {
     setRefreshKey((prevKey) => prevKey + 1); // increment the refreshKey to trigger a new fetch
   };
 
-  const monthlyMobilePrice = SubscriptionData.reduce((sum, item) => {
-    if (item.type === "Mobile") {
-      return sum + parseFloat(item.pricemonth);
-    }
-    return sum;
-  }, 0);
-
-  const monthlyBroadbandPrice = SubscriptionData.reduce((sum, item) => {
-    if (item.type === "Internet") {
-      return sum + parseFloat(item.pricemonth);
-    }
-    return sum;
-  }, 0);
-
-  const monthlyStreamingPrice = SubscriptionData.reduce((sum, item) => {
-    if (item.type === "Streaming") {
-      return sum + parseFloat(item.pricemonth);
-    }
-    return sum;
-  }, 0);
-
-  const monthlyOtherPrice = SubscriptionData.reduce((sum, item) => {
-    if (item.type === "Other") {
-      return sum + parseFloat(item.pricemonth);
-    }
-    return sum;
-  }, 0);
-
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
-
-  const overviewProps = () => {
-    if (!yearly) {
-      return {
-        headLine: "Månedligt",
-        mobile: monthlyMobilePrice,
-        broadband: monthlyBroadbandPrice,
-        streaming: monthlyStreamingPrice,
-        other: monthlyOtherPrice,
-        total:
-          monthlyMobilePrice +
-          monthlyBroadbandPrice +
-          monthlyStreamingPrice +
-          monthlyOtherPrice,
-      };
-    } else {
-      return {
-        headLine: "Årligt",
-        mobile: monthlyMobilePrice * 12,
-        broadband: monthlyBroadbandPrice * 12,
-        streaming: monthlyStreamingPrice * 12,
-        other: monthlyOtherPrice * 12,
-        total:
-          (monthlyMobilePrice +
-            monthlyBroadbandPrice +
-            monthlyStreamingPrice +
-            monthlyOtherPrice) *
-          12,
-      };
-    }
-  };
-  const onClickYear = () => {
-    setYearly(true); // Toggle the value of yearly
-  };
-  const onClickMonth = () => {
-    setYearly(false); // Toggle the value of yearly
-  };
-
-  var yearClassnames =
-    "bg-custom-black hover:bg-blue-600 text-s font-bold w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1";
-  var monthClassnames =
-    "bg-#2f2f2f hover:bg-blue-600 text-s font-bold w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1";
 
   if (!currentUser) {
     return <Login />;
@@ -148,33 +77,7 @@ export default function Dashboard() {
               visible={true}
             />
           ) : (
-            <>
-              <div className="flex flex-col items-center w-full mt-4">
-                <div className="flex flex-row w-6/12 justify-center">
-                  <button
-                    className={`border-${
-                      yearly ? "black" : "2"
-                    }   text-s font-bold border-black border-b-0 w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1'}`}
-                    onClick={onClickMonth}
-                  >
-                    Måned
-                  </button>
-                  <button
-                    className={`border-${
-                      yearly ? "2" : "black"
-                    }  text-s border-b-0 font-bold border-black w-6/12 rounded-t-full py-2 px-6 mt-3 mr-1'}`}
-                    onClick={onClickYear}
-                  >
-                    År
-                  </button>
-                </div>
-                <div className="flex flex-col w-full md:flex-row">
-                  <div className="flex justify-center m-auto w-full md:w-10/12">
-                    <OverviewCard {...overviewProps()} />
-                  </div>
-                </div>
-              </div>
-            </>
+            <OverviewCard SubscriptionData={SubscriptionData} />
           )}
           <h1 className="text-xl md:text-3xl p-2 mt-12">Dine abonementer</h1>{" "}
           <span className="border-b-2 border-white h-1 w-10/12 md:w-8/12"></span>

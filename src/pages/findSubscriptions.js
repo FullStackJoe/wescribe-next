@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { useAuth } from "@/firebase/AuthContext";
 import Layout from "@/components/layout";
-import HasNoSubs from "@/components/Dashboard/Alternatives/HasNoSubs";
-import HasSubs from "@/components/Dashboard/Alternatives/HasSubs";
+import HasNoSubs from "@/components/Alternatives/HasNoSubs";
+import HasSubs from "@/components/Alternatives/HasSubs";
 import Login from "./login";
 
 export default function AlternativeSubscriptions() {

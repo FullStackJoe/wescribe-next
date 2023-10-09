@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SubscriptionCard from "../SubscriptionCard";
+import SubscriptionCard from "../Dashboard/SubscriptionCard";
 import NoCheaperSubs from "./NoCheaperSubs";
 
 function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
