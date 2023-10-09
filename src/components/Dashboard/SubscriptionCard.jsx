@@ -12,7 +12,13 @@ export default function SubscriptionCard({
   subscriptionId,
 }) {
   const handleDelete = () => {
-    setLoading(true);
+    // Optimistically update the UI
+    setSubscriptionData((prevSubscriptionData) =>
+      prevSubscriptionData.filter(
+        (item) => item.subscriptionid !== subscriptionId
+      )
+    );
+
     // Define the endpoint and the request options
     const url = "/api/deleteMobileSubscription/" + subscriptionId;
     const requestOptions = {
@@ -23,18 +29,28 @@ export default function SubscriptionCard({
 
     // Send the DELETE request
     fetch(url, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        setSubscriptionData((prevSubscriptionData) =>
-          prevSubscriptionData.filter(
-            (item) => item.subscriptionid !== subscriptionId
-          )
-        );
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
       })
-      .then(() => setLoading(false))
+      .then((data) => {
+        // The request was successful, do nothing
+      })
       .catch((error) => {
         console.error("There was an error deleting the subscription:", error);
-        // Handle the error appropriately
+        // The request failed, revert the changes
+        setSubscriptionData((prevSubscriptionData) => [
+          ...prevSubscriptionData,
+          {
+            subscriptionid: subscriptionId,
+            provider: provider,
+            talktime: talk,
+            datamonth: data,
+            pricemonth: monthlyPrice,
+          },
+        ]);
       });
   };
 
