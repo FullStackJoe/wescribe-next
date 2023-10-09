@@ -11,6 +11,8 @@ function HasSubs({ AltSubscriptionData, SubscriptionData }) {
         AltSubscriptionData={AltSubscriptionData}
         SubscriptionData={SubscriptionData}
       />
+      <h1 className="text-center text-3xl">Bredbånd</h1>
+      <p className="text-center">KOMMER SNART</p>
     </>
   );
 }

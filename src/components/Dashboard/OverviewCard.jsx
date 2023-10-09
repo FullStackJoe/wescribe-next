@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function OverviewCard({ SubscriptionData }) {
+export default function OverviewCard({ SubscriptionData, currentUser }) {
   const [yearly, setYearly] = useState(false);
 
   const initialPriceObject = {
@@ -25,6 +25,16 @@ export default function OverviewCard({ SubscriptionData }) {
   const onClickMonth = () => {
     setYearly(false); // Toggle the value of yearly
   };
+
+  console.log(SubscriptionData);
+
+  if (SubscriptionData.length === 0) {
+    return (
+      <p className="mt-12">
+        Når du har tilføjet dine abonnementer vises dit månedlige overblik her
+      </p>
+    );
+  }
 
   return (
     <>

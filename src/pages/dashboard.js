@@ -77,7 +77,10 @@ export default function Dashboard() {
               visible={true}
             />
           ) : (
-            <OverviewCard SubscriptionData={SubscriptionData} />
+            <OverviewCard
+              SubscriptionData={SubscriptionData}
+              currentUser={currentUser}
+            />
           )}
           <h1 className="text-xl md:text-3xl p-2 mt-12">Dine abonementer</h1>{" "}
           <span className="border-b-2 border-white h-1 w-10/12 md:w-8/12"></span>

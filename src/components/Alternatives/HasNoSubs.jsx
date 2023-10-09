@@ -5,15 +5,15 @@ function HasNoSubs() {
   return (
     <div className="flex flex-col items-center mt-20">
       <h1 className="text-xl md:text-3xl">
-        You dont have any subscriptions yet :(
+        Du har endnu ikke tilføjet nogle abonnementer til din profil :(
       </h1>
       <br />
       <p>
-        Go to{" "}
-        <Link href="/dashboard" className="text-[#BD0060] text-sm md:text-xl">
-          My dashboard
+        Kom tilbage når du har været inde på{" "}
+        <Link href="/dashboard" className="text-[#BD0060]">
+          Mit Overblik
         </Link>{" "}
-        to add your subscriptions
+        og tilføjet dine abonnementer
       </p>
     </div>
   );
