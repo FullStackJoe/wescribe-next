@@ -26,8 +26,6 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
     setYearly(false); // Toggle the value of yearly
   };
 
-  console.log(SubscriptionData);
-
   if (SubscriptionData.length === 0) {
     return (
       <p className="mt-12">

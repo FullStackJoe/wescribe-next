@@ -13,8 +13,29 @@ export default function Dashboard() {
   const [SubscriptionData, setSubscriptionData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [editMode, setEditMode] = useState(false);
+
+  const addSubscriptionOptimistically = (newSubscription) => {
+    setSubscriptionData((prevSubscriptionData) => [
+      ...prevSubscriptionData,
+      newSubscription,
+    ]);
+  };
+
+  const onSubmitSuccess = (responseData, subTempId) => {
+    console.log(responseData);
+    setSubscriptionData((prevSubscriptionData) =>
+      prevSubscriptionData.map((subscription) =>
+        subscription.subscriptionid === subTempId
+          ? { ...subscription, subscriptionid: responseData.subscriptionid }
+          : subscription
+      )
+    );
+  };
+
+  useEffect(() => {
+    console.log(SubscriptionData); // Logs the updated state
+  }, [SubscriptionData]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,11 +63,7 @@ export default function Dashboard() {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
-  }, [refreshKey]);
-
-  const handleSuccess = () => {
-    setRefreshKey((prevKey) => prevKey + 1); // increment the refreshKey to trigger a new fetch
-  };
+  }, []);
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
@@ -151,11 +168,12 @@ export default function Dashboard() {
             </>
           )}
           <CreateModal
+            addSubscriptionOptimistically={addSubscriptionOptimistically}
             toggleEditMode={toggleEditMode}
             userId={currentUser.uid}
             isOpen={isModalOpen}
             onClose={closeModal}
-            onSubmitSuccess={handleSuccess}
+            onSubmitSuccess={onSubmitSuccess}
           />
         </div>
       </Layout>

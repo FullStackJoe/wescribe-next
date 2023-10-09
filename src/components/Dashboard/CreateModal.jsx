@@ -6,6 +6,7 @@ import styles from "./CreateModal.module.css";
 // import StreamingForm from "./forms/StreamingForm";
 
 const CreateModal = ({
+  addSubscriptionOptimistically,
   toggleEditMode,
   userId,
   isOpen,
@@ -15,15 +16,16 @@ const CreateModal = ({
   const [selectedCategory, setSelectedCategory] = useState("default");
   const [showDropdowns, setShowDropdowns] = useState(false);
 
-  const renderForm = (onClose, onSubmitSuccess) => {
+  const renderForm = (onClose) => {
     switch (selectedCategory) {
       case "Mobilabonnement":
         return (
           <CreateMobileForm
+            onSubmitSuccess={onSubmitSuccess}
+            addSubscriptionOptimistically={addSubscriptionOptimistically}
             toggleEditMode={toggleEditMode}
             userId={userId}
             onClose={onClose}
-            onSubmitSuccess={onSubmitSuccess}
           />
         );
       case "Bredbånd":
@@ -108,7 +110,7 @@ const CreateModal = ({
                 <option value="Anden kategori">Anden kategori</option>
               </select>
             </div>
-            {showDropdowns && renderForm(onClose, onSubmitSuccess)}
+            {showDropdowns && renderForm(onClose)}
           </div>
         </div>
       </>

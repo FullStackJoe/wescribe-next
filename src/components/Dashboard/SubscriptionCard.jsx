@@ -11,6 +11,8 @@ export default function SubscriptionCard({
   editMode,
   subscriptionId,
 }) {
+  console.log(subscriptionId);
+
   const handleDelete = () => {
     // Optimistically update the UI
     setSubscriptionData((prevSubscriptionData) =>
@@ -21,6 +23,9 @@ export default function SubscriptionCard({
 
     // Define the endpoint and the request options
     const url = "/api/deleteMobileSubscription/" + subscriptionId;
+
+    console.log(subscriptionId);
+
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -30,6 +35,7 @@ export default function SubscriptionCard({
     // Send the DELETE request
     fetch(url, requestOptions)
       .then((response) => {
+        console.log(response);
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
         }
@@ -58,7 +64,6 @@ export default function SubscriptionCard({
     <>
       <div className="flex flex-col justify-between items-center w-[365px]">
         <div className="relative flex flex-row items-center border-2 border-gray-500 rounded-md p-5 w-full">
-          {/* ...rest of your code... */}
           {editMode ? (
             <Image
               className="absolute top-0 right-0 transform -translate-y-3 translate-x-3"

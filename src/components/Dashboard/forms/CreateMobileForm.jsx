@@ -4,6 +4,7 @@ export default function MobileSubscriptionForm({
   toggleEditMode,
   userId,
   onClose,
+  addSubscriptionOptimistically,
   onSubmitSuccess,
 }) {
   const [provider, setProvider] = useState("");
@@ -31,8 +32,20 @@ export default function MobileSubscriptionForm({
       setErrormsg("Angiv venligst en pris");
       return;
     }
+    const newSubscription = {
+      subscriptionid: Math.random().toString(),
+      type: "Mobile",
+      provider,
+      talktime: isTalktimeCheked ? 9999 : talktime,
+      datamonth: isDataCheked ? 9999 : data,
+      pricemonth: price,
+    };
+
+    addSubscriptionOptimistically(newSubscription);
+    onClose();
 
     toggleEditMode();
+
     // Create a JSON object with the selected data
     const formData = {
       Provider: provider,
@@ -54,9 +67,10 @@ export default function MobileSubscriptionForm({
 
       if (response.ok) {
         // Data was successfully sent
-        onClose();
-        onSubmitSuccess();
-        // Optionally, you can handle success here
+        const responseData = await response.json();
+
+        onSubmitSuccess(responseData, newSubscription.subscriptionid);
+
         setProvider("");
         setData("");
         setTalktime("");
@@ -64,6 +78,8 @@ export default function MobileSubscriptionForm({
       } else {
         // Handle the case where the request was not successful (e.g., show an error message)
         console.error("Failed to submit data.");
+        const errorData = await response.json();
+        console.error(errorData);
       }
     } catch (error) {
       // Handle any network or request errors
@@ -162,11 +178,6 @@ export default function MobileSubscriptionForm({
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-        {/*   
-        <div>
-          <input type="checkbox" className="toggle" checked />
-        </div>
-        */}
         <p>{erroMsg}</p>
         <button
           onClick={submit}
