@@ -27,14 +27,32 @@ const CreateModal = ({
           />
         );
       case "Bredbånd":
-        // return <BroadbandForm />;
-        return "";
+        return (
+          <div className="flex flex-col items-center">
+            <p className="mt-6 mb-2">
+              Denne feature er ikke implementeret endnu
+            </p>
+            <p>Tilføj istedet et mobilabonnement</p>
+          </div>
+        );
       case "Streaming":
-        // return <StreamingForm />;
-        return "";
+        return (
+          <div className="flex flex-col items-center">
+            <p className="mt-6 mb-2">
+              Denne feature er ikke implementeret endnu
+            </p>
+            <p>Tilføj istedet et mobilabonnement</p>
+          </div>
+        );
       case "Anden kategori":
-        // return <OtherForm />;
-        return "";
+        return (
+          <div className="flex flex-col items-center">
+            <p className="mt-6 mb-2">
+              Denne feature er ikke implementeret endnu
+            </p>
+            <p>Tilføj istedet et mobilabonnement</p>
+          </div>
+        );
       default:
         return null; // Render nothing if no category is selected
     }
