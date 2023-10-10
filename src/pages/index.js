@@ -35,8 +35,8 @@ export default function Home() {
             </Link>
           </h2>
           <p className="md:text-xl my-1 mb-6">
-            Fontend er lavet i Next.js (React) - Backend er lavet i Next.js og
-            postgreSQL.
+            Fontend er lavet i Next.js (React) - Backend er lavet i Next.js,
+            postgreSQL og Firebase Auth.
           </p>
           <p className="md:text-xl my-1 font-bold">
             WeScribe er stedet hvor du nemt kan danne et overblik over alle dine
@@ -67,7 +67,7 @@ export default function Home() {
           <h2></h2>
           <Link
             href="/home"
-            className="text-[#BD0060] md:text-xl my-4 font-bold"
+            className="text-[#BD0060] md:text-xl my-4 pb-6 md:pb-0 font-bold"
           >
             Klik her for at komme til WeScribe.dk
           </Link>

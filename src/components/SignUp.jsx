@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "@/firebase/AuthContext";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import Layout from "./layout";
 
 function SignUp() {
   const emailRef = useRef();
@@ -11,7 +9,7 @@ function SignUp() {
   const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [signedUpSuccessful, setSignedUpSuccessful] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -24,13 +22,28 @@ function SignUp() {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      router.push("/dashboard");
+      setSignedUpSuccessful(true);
     } catch (e) {
       setError("Failed to create account");
       console.log(e);
     }
-
     setLoading(false);
+  }
+
+  if (signedUpSuccessful) {
+    return (
+      <div className="flex flex-col items-center">
+        <p>Din bruger er nu oprettet, og du er klar til at spare penge!</p>
+        <p></p>
+        <Link href="/dashboard" className="font-bold mt-6">
+          Klik her for at komme videre
+        </Link>
+      </div>
+    );
+  }
+
+  if (!signedUpSuccessful && currentUser) {
+    return <p>Du er allerede logget ind</p>;
   }
 
   return (

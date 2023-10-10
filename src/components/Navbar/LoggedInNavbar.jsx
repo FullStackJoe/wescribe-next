@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Link from "next/link";
 import { useRouter } from "next/router";
-// import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "@/firebase/AuthContext";
 
 const LoggedInNavbar = () => {
-  // const { currentUser, logout } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [nav, setNav] = useState(false);
   const router = useRouter();
 
@@ -16,7 +16,7 @@ const LoggedInNavbar = () => {
   async function handleLogout() {
     try {
       await logout();
-      router.push("/login");
+      router.push("/");
     } catch {}
   }
 
