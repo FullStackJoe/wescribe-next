@@ -1,0 +1,7 @@
+.alternativeSub {
+  transition: transform 0.2s ease-in-out; /* Adjust the duration and easing to your liking */
+}
+
+.alternativeSub:hover {
+  transform: scale(1.05); /* Adjust the scaling factor to your liking */
+}

@@ -1,4 +1,3 @@
-// pages/api/createMobileSubscription.js
 import { pool } from "../../../db";
 import { createMobileSubscriptionQuery } from "../../../apiQueries";
 

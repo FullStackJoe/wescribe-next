@@ -51,7 +51,7 @@ export default function Home() {
             dig for billigere løsninger!
           </p>
           <h2 className="font-bold mt-4">
-            Bemærk: WeScribe er stadig work in progress, så visse funktioner er
+            Bemærk: WeScribe er stadig work in progress. Nogle funktioner er
             ikke klar endnu
           </h2>
           <h2 className="font-bold my-4">

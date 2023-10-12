@@ -6,9 +6,12 @@ export const createMobileSubscriptionQuery =
   "insert into Subscriptions(Provider, Type, Category, Name, PriceMonth, DataMonth, Talktime, UploadSpeed, DownloadSpeed, Userid, available) VALUES ($1, 'Mobile', 'Mobile', 'Placeholder', $2, $3, $4, NULL, NULL, $5, false) RETURNING *;";
 export const deleteMobileSubscriptionQuery =
   "DELETE FROM Subscriptions WHERE subscriptionId = $1;";
+export const addUserQuery =
+  "INSERT INTO users(userID) VALUES ($1) RETURNING *;";
 
 export const getSubscription =
   "SELECT * FROM Subscriptions WHERE subscriptionId = $1;";
+
 {
   /*
   export const getCheaperInternetAlternativeQuery =

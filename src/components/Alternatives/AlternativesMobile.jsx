@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import SubscriptionCard from "../Dashboard/SubscriptionCard";
 import NoCheaperSubs from "./NoCheaperSubs";
+import Link from "next/link";
+import styles from "./AlternativesMobile.module.css";
 
 function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,25 +61,31 @@ function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
             </div>
             {subArray.length > 1 ? (
               <div className="ml-6 alternative">
-                <SubscriptionCard
-                  provider={subArray[indices[index] || 1].provider} // Use the current index
-                  talk={
-                    subArray[indices[index] || 1].talktime === 9999
-                      ? "FRI"
-                      : subArray[indices[index] || 1].talktime
-                  }
-                  data={
-                    subArray[indices[index] || 1].datamonth === 9999
-                      ? "FRI"
-                      : subArray[indices[index] || 1].datamonth
-                  }
-                  monthlyPrice={parseInt(
-                    subArray[indices[index] || 1].pricemonth
-                  )}
-                  editMode={""}
-                  subscriptionId={subArray[indices[index] || 0].subscriptionid}
-                  onSubmitSuccess={""}
-                />
+                <Link href={subArray[indices[index] || 1].link}>
+                  <div className={styles.alternativeSub}>
+                    <SubscriptionCard
+                      provider={subArray[indices[index] || 1].provider} // Use the current index
+                      talk={
+                        subArray[indices[index] || 1].talktime === 9999
+                          ? "FRI"
+                          : subArray[indices[index] || 1].talktime
+                      }
+                      data={
+                        subArray[indices[index] || 1].datamonth === 9999
+                          ? "FRI"
+                          : subArray[indices[index] || 1].datamonth
+                      }
+                      monthlyPrice={parseInt(
+                        subArray[indices[index] || 1].pricemonth
+                      )}
+                      editMode={""}
+                      subscriptionId={
+                        subArray[indices[index] || 0].subscriptionid
+                      }
+                      onSubmitSuccess={""}
+                    />
+                  </div>
+                </Link>
                 {subArray.length > 2 ? (
                   <div className="flex justify-center">
                     <button onClick={() => handleButtonClick(index)}>
