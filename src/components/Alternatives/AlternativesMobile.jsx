@@ -61,7 +61,7 @@ function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
             </div>
             {subArray.length > 1 ? (
               <div className="ml-6 alternative">
-                <Link href={subArray[indices[index] || 1].link}>
+                <a target="_blank" href={subArray[indices[index] || 1].link}>
                   <div className={styles.alternativeSub}>
                     <SubscriptionCard
                       provider={subArray[indices[index] || 1].provider} // Use the current index
@@ -85,7 +85,7 @@ function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
                       onSubmitSuccess={""}
                     />
                   </div>
-                </Link>
+                </a>
                 {subArray.length > 2 ? (
                   <div className="flex justify-center">
                     <button onClick={() => handleButtonClick(index)}>
