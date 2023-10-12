@@ -11,8 +11,6 @@ export default function SubscriptionCard({
   editMode,
   subscriptionId,
 }) {
-  console.log(subscriptionId);
-
   const handleDelete = () => {
     // Optimistically update the UI
     setSubscriptionData((prevSubscriptionData) =>
