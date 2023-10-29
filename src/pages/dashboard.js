@@ -33,13 +33,8 @@ export default function Dashboard() {
     );
   };
 
-  useEffect(() => {
-    console.log(SubscriptionData); // Logs the updated state
-  }, [SubscriptionData]);
-
   const openModal = () => {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   };
 
   const closeModal = () => {

@@ -46,8 +46,6 @@ export default function AlternativeSubscriptions() {
       });
   }, []);
 
-  console.log(AltSubscriptionData);
-
   if (!currentUser) {
     return <Login />;
   }
