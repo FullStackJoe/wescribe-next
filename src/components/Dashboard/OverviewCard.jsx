@@ -4,16 +4,18 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
   const [yearly, setYearly] = useState(false);
 
   const initialPriceObject = {
-    Mobile: 0,
-    Internet: 0,
-    Streaming: 0,
-    Other: 0,
-    Total: 0,
+    mobile: 0,
+    internet: 0,
+    streaming: 0,
+    other: 0,
+    total: 0,
   };
+  console.log("HHEEEE");
 
   const monthlyPrices = SubscriptionData.reduce((acc, item) => {
-    if (item.type in acc) {
-      acc[item.type] += parseFloat(item.pricemonth);
+    if (item.category in acc) {
+      console.log(item.category);
+      acc[item.category] += parseFloat(item.pricemonth);
       acc.Total += parseFloat(item.pricemonth);
     }
     return acc;
@@ -62,7 +64,7 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
                 <div className="flex flex-col w-1/2 lg:w-2/12 items-center pt-7 pb-7 lg:ml-7">
                   <p>Mobil</p>
                   <p className="text-2xl pt-2 text-[#BD0060]">
-                    {!yearly ? monthlyPrices.Mobile : monthlyPrices.Mobile * 12}
+                    {!yearly ? monthlyPrices.mobile : monthlyPrices.mobile * 12}
                   </p>
                   <p className="text-[#BD0060] pt-1">
                     kr / {yearly ? "år" : "md"}
@@ -72,8 +74,8 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
                   <p>Bredbånd</p>
                   <p className="text-2xl pt-2 text-[#BD0060]">
                     {!yearly
-                      ? monthlyPrices.Internet
-                      : monthlyPrices.Internet * 12}
+                      ? monthlyPrices.internet
+                      : monthlyPrices.internet * 12}
                   </p>
                   <p className="text-[#BD0060] pt-1">
                     kr / {yearly ? "år" : "md"}
@@ -83,8 +85,8 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
                   <p>Streaming</p>
                   <p className="text-2xl pt-2 text-[#BD0060]">
                     {!yearly
-                      ? monthlyPrices.Streaming
-                      : monthlyPrices.Streaming * 12}
+                      ? monthlyPrices.streaming
+                      : monthlyPrices.streaming * 12}
                   </p>
                   <p className="text-[#BD0060] pt-1">
                     kr / {yearly ? "år" : "md"}
@@ -93,7 +95,7 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
                 <div className="flex flex-col w-1/2 lg:w-2/12 items-center pt-7">
                   <p>Andre</p>
                   <p className="text-2xl pt-2 text-[#BD0060]">
-                    {!yearly ? monthlyPrices.Other : monthlyPrices.Other * 12}
+                    {!yearly ? monthlyPrices.other : monthlyPrices.other * 12}
                   </p>
                   <p className="text-[#BD0060] pt-1">
                     kr / {yearly ? "år" : "md"}
@@ -102,7 +104,7 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
                 <div className="flex flex-col w-full lg:w-2/12 items-center pt-7 lg:mr-5 pb-4">
                   <p>Total </p>
                   <p className="text-2xl pt-2 text-[#BD0060]">
-                    {!yearly ? monthlyPrices.Total : monthlyPrices.Total * 12}
+                    {!yearly ? monthlyPrices.total : monthlyPrices.total * 12}
                   </p>
                   <p className="text-[#BD0060] pt-1">
                     kr / {yearly ? "år" : "md"}

@@ -1,9 +1,5 @@
-// THIS ENDPOINT IS NOT IN USE!
-
-// pages/api/getAlternativeSubscriptionByUserId.js
 import { pool } from "../../../../db";
 import {
-  getSubscriptionsByUserIdQuery,
   getCheaperMobileAlternativeQuery,
   getCheaperInternetAlternativeQuery,
   getSubscription,
@@ -12,6 +8,7 @@ import {
 const getAlternativeSub = async (sub) => {
   const {
     type,
+    category,
     pricemonth,
     datamonth,
     talktime,
@@ -23,12 +20,13 @@ const getAlternativeSub = async (sub) => {
   let query = "";
   let variables = [];
 
-  if (type === "Mobile") {
+  if (category === "mobile") {
     query = getCheaperMobileAlternativeQuery;
-    variables = [type, pricemonth, datamonth, talktime, subscriptionid];
-  } else if (type === "Internet") {
+    variables = [pricemonth, datamonth, talktime, subscriptionid];
+    console.log("im here");
+  } else if (category === "broadband") {
     query = getCheaperInternetAlternativeQuery;
-    variables = [type, pricemonth, uploadspeed, downloadspeed, subscriptionid];
+    variables = [pricemonth, uploadspeed, downloadspeed, subscriptionid];
   }
 
   try {

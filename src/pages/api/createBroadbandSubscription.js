@@ -3,7 +3,7 @@ import { createBroadbandSubscriptionQuery } from "../../../apiQueries";
 
 const createBroadbandSubscription = async (req, res) => {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method Not Allowed" });
+    return res.status(405).json({ message: "Method Not AllowedYOLO" });
   }
 
   const { Provider, PriceMonth, uploadSpeed, downloadSpeed, Userid } = req.body;
