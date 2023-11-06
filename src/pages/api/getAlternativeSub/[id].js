@@ -23,7 +23,6 @@ const getAlternativeSub = async (sub) => {
   if (category === "mobile") {
     query = getCheaperMobileAlternativeQuery;
     variables = [pricemonth, datamonth, talktime, subscriptionid];
-    console.log("im here");
   } else if (category === "broadband") {
     query = getCheaperInternetAlternativeQuery;
     variables = [pricemonth, uploadspeed, downloadspeed, subscriptionid];
@@ -47,10 +46,29 @@ const getAlternativeSubscriptionByUserId = async (req, res) => {
 
   try {
     const { rows } = await pool.query(getSubscription, [id]);
-    console.log(rows);
     if (rows.length > 0) {
-      const alternativeSub = await getAlternativeSub(rows[0]); // getting alternative for the first subscription
-      res.status(200).json(alternativeSub);
+      const originalPricePerMonth = rows[0].pricemonth;
+      const alternativeSubs = await getAlternativeSub(rows[0]); // getting alternative for the first subscription
+
+      // Here, we add the "6monthsaving" field to each object with dynamic calculation
+      const enrichedSubs = alternativeSubs.map((sub) => {
+        let saving;
+        if (sub.discountmonths !== null && sub.discountprice !== null) {
+          saving =
+            originalPricePerMonth * 6 -
+            sub.pricemonth * (6 - sub.discountmonths) -
+            sub.discountmonths * sub.discountprice;
+        } else {
+          saving = originalPricePerMonth * 6 - sub.pricemonth * 6;
+        }
+
+        return {
+          ...sub, // Spread operator to copy all existing fields
+          sixmonthsaving: saving, // Add the new field with the calculated saving
+        };
+      });
+
+      res.status(200).json(enrichedSubs);
     } else {
       res.status(404).json({ message: "No subscriptions found" });
     }

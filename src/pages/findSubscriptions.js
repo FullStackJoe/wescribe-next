@@ -34,6 +34,7 @@ export default function AlternativeSubscriptions() {
           )
         );
       })
+
       .then((groupedDataArray) => {
         setAltSubscriptionData(groupedDataArray);
         setLoading(false);

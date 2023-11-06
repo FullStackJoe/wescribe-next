@@ -10,11 +10,9 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
     other: 0,
     total: 0,
   };
-  console.log("HHEEEE");
 
   const monthlyPrices = SubscriptionData.reduce((acc, item) => {
     if (item.category in acc) {
-      console.log(item.category);
       acc[item.category] += parseFloat(item.pricemonth);
       acc.Total += parseFloat(item.pricemonth);
     }

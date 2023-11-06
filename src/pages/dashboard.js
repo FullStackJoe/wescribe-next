@@ -57,7 +57,6 @@ export default function Dashboard() {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
-    console.log(SubscriptionData);
   }, []);
 
   const toggleEditMode = () => {
@@ -144,13 +143,13 @@ export default function Dashboard() {
                     <div className="px-6 py-5" key={item.subscriptionid}>
                       <SubscriptionCard
                         setSubscriptionData={setSubscriptionData}
-                        setLoading={setLoading}
                         provider={item.provider}
                         talk={item.talktime === 9999 ? "FRI" : item.talktime}
                         data={item.datamonth === 9999 ? "FRI" : item.datamonth}
                         monthlyPrice={parseInt(item.pricemonth)}
                         editMode={editMode}
                         subscriptionId={item.subscriptionid}
+                        discount={item.discount}
                       />
                     </div>
                   ))}

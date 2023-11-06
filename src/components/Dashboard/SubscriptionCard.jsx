@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 export default function SubscriptionCard({
-  setLoading,
   setSubscriptionData,
   provider,
   data,
@@ -10,6 +9,8 @@ export default function SubscriptionCard({
   monthlyPrice,
   editMode,
   subscriptionId,
+  discountMonths,
+  discountPrice,
 }) {
   const handleDelete = () => {
     // Optimistically update the UI
@@ -60,7 +61,13 @@ export default function SubscriptionCard({
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center w-[365px]">
+      <div className="flex flex-col justify-between items-center w-[365px] relative">
+        {discountMonths != null ? (
+          <div className="absolute top-[-16px] left-1/2 transform -translate-x-1/2 bg-[#BD0060] text-white py-1 px-3 rounded-bl-md rounded-tr-md z-10">
+            {discountPrice},- de første {discountMonths} mdr
+          </div>
+        ) : null}
+
         <div className="relative flex flex-row items-center border-2 border-gray-500 rounded-md p-5 w-full">
           {editMode ? (
             <Image
@@ -93,7 +100,14 @@ export default function SubscriptionCard({
             </div>
           </div>
           <div className="pl-8 md:pl-12 flex flex-col items-center w-[200px]">
-            <p className="text-xl text-[#BD0060]">{monthlyPrice}</p>{" "}
+            {discountMonths != null ? (
+              <p className="text-xl text-[#BD0060] text-decoration-line: line-through">
+                {monthlyPrice}
+              </p>
+            ) : (
+              <p className="text-xl text-[#BD0060]">{monthlyPrice}</p>
+            )}
+
             <p className="text-[#BD0060]">kr / md</p>
           </div>
         </div>
