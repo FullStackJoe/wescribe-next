@@ -1,3 +1,7 @@
+// TODO
+// Lav API om så der requestes på et brugerID og returneres alternativer til alle brugerens abonnementer,
+// et alternativ skal også indeholde id på det originale abonnement
+
 import { pool } from "../../../../db";
 import {
   getCheaperMobileAlternativeQuery,
@@ -67,7 +71,7 @@ const getAlternativeSubscriptionByUserId = async (req, res) => {
           sixmonthsaving: saving, // Add the new field with the calculated saving
         };
       });
-
+      console.log(enrichedSubs);
       res.status(200).json(enrichedSubs);
     } else {
       res.status(404).json({ message: "No subscriptions found" });

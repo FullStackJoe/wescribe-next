@@ -36,10 +36,7 @@ function HasSubs({ AltSubscriptionData, SubscriptionData }) {
           mdr
         </span>
       </div>
-      <AlternativesMobile
-        AltSubscriptionData={AltSubscriptionData}
-        SubscriptionData={SubscriptionData}
-      />
+      <AlternativesMobile AltSubscriptionData={AltSubscriptionData} />
       <h1 className="text-center text-3xl">Bredbånd</h1>
       <p className="text-center">KOMMER SNART</p>
     </>

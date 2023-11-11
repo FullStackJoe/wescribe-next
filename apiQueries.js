@@ -9,19 +9,24 @@ export const getCheaperMobileAlternativeQuery = // Get 3 alternative mobile subs
 export const addUserQuery = // Add a user to Users table, returning the created user.
   "INSERT INTO users(userID) VALUES ($1) RETURNING *;";
 export const createBroadbandSubscriptionQuery = // Create broadband sub from provider, priceMonth, uploadSpeed, downloadSpeed, userId, returns the created sub
-  "insert into Subscriptions(Provider, Type, Name, PriceMonth, DataMonth, Talktime, UploadSpeed, DownloadSpeed, Userid, available) VALUES ($1, 'Broadband', 'Placeholder', $2, NULL, NULL, $3, $4, $5, false) RETURNING *;";
+  "insert into Subscriptions(Provider, PriceMonth, DataMonth, Talktime, UploadSpeed, DownloadSpeed, Userid, available) VALUES ($1, 'Broadband', 'Placeholder', $2, NULL, NULL, $3, $4, $5, false) RETURNING *;";
 export const createMobileSubscriptionQuery =
   "insert into mobilesubscription(Provider, PriceMonth, DataMonth, Talktime, Userid, available) VALUES ($1, $2, $3, $4, $5, false) RETURNING *;";
 // Delte queries
 export const deleteMobileSubscriptionQuery =
   "DELETE FROM mobilesubscription WHERE subscriptionId = $1;";
 
-{
-  /*
+Provider,
+  PriceMonth,
+  uploadSpeed,
+  downloadSpeed,
+  Userid,
+  {
+    /*
   export const getCheaperInternetAlternativeQuery =
     "SELECT * FROM Subscriptions WHERE type = $1 AND priceMonth <= $2 and uploadSpeed >= $3 and downloadSpeed>= $4 and subscriptionId <> $5;";
 
   export const getSubscriptionsQuery = "SELECT * FROM Subscriptions";
 
   */
-}
+  };

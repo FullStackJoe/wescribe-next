@@ -14,6 +14,8 @@ export default function AlternativeSubscriptions() {
   const [loading, setLoading] = useState(true);
   const [altLoading, setAltLoading] = useState(true);
 
+  // TODO
+  // API should be changes to this call can be made much simpler withour sorting and concatination.
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -34,9 +36,19 @@ export default function AlternativeSubscriptions() {
           )
         );
       })
-
       .then((groupedDataArray) => {
-        setAltSubscriptionData(groupedDataArray);
+        // Sort the outer array based on the highest sixmonthsaving value
+        const sortedAltSubscriptionData = groupedDataArray.sort((a, b) => {
+          const highestSavingA = Math.max(
+            ...a.slice(1).map((sub) => sub.sixmonthsaving)
+          );
+          const highestSavingB = Math.max(
+            ...b.slice(1).map((sub) => sub.sixmonthsaving)
+          );
+          return highestSavingB - highestSavingA;
+        });
+
+        setAltSubscriptionData(sortedAltSubscriptionData);
         setLoading(false);
         setAltLoading(false);
       })

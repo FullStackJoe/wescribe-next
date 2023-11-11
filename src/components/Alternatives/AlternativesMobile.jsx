@@ -4,9 +4,9 @@ import NoCheaperSubs from "./NoCheaperSubs";
 import styles from "./AlternativesMobile.module.css";
 import Savings from "./Savings";
 
-function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
+function AlternativesMobile({ AltSubscriptionData }) {
   const [indices, setIndices] = useState({}); // Step 1: Initialize a state variable for indices
-
+  console.log(AltSubscriptionData);
   const handleButtonClick = (subArrayIndex) => {
     setIndices((prevIndices) => {
       const currentIndex = prevIndices[subArrayIndex] || 1;
@@ -16,7 +16,7 @@ function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
     });
   };
 
-  if (SubscriptionData.length === 0) {
+  if (AltSubscriptionData.length === 0) {
     return (
       <>
         <p className="mt-5">
@@ -29,20 +29,20 @@ function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-row w-full justify-center">
-        <div className="flex flex-col items-center w-auto">
+        <div className="flex flex-col items-center w-auto mr-24">
           <div className="text-center" style={{ width: "365px" }}>
-            <h2 className="font-bold text-2xl">Dine abonnementer</h2>
+            <h2 className="font-bold text-2xl">Dine nuværende abonnementer</h2>
           </div>
         </div>
-        <div className="flex flex-col items-center w-auto">
+        <div className="flex flex-col items-center w-auto ml-24">
           <div className="text-center" style={{ width: "365px" }}>
-            <h2 className="font-bold text-2xl">Besparrelse</h2>
+            <h2 className="font-bold text-2xl">Forslag til nye abonnementer</h2>
           </div>
         </div>
       </div>
       {AltSubscriptionData.map((subArray, index) => (
         <div key={index}>
-          <div className="flex flex-row m-6">
+          <div className="flex flex-row m-4">
             <div className="mr-4">
               <SubscriptionCard
                 provider={subArray[0].provider}
@@ -109,10 +109,15 @@ function AlternativesMobile({ AltSubscriptionData, SubscriptionData }) {
             ) : (
               <>
                 <Savings />
-                <div className="flex items-center text-center ml-6">
-                  <p style={{ maxWidth: "365px" }}>
-                    Vi fandt ingen billigere alternativer til dette abonnement
-                  </p>
+                <div className="ml-6 alternative">
+                  <div className="flex items-center justify-center text-center ml-6 h-24">
+                    <p style={{ maxWidth: "340px" }}>
+                      Vi fandt ingen billigere alternativer til dette abonnement
+                    </p>
+                  </div>
+                  <div className="flex justify-center">
+                    <p className="invisible">inivisible</p>
+                  </div>
                 </div>
               </>
             )}
