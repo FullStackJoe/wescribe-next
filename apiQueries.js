@@ -14,7 +14,9 @@ export const createBroadbandSubscriptionQuery = // Create broadband sub from pro
 export const createStreamingSubscriptionQuery = // Create broadband sub from provider, priceMonth, uploadSpeed, downloadSpeed, userId, returns the created sub
   "insert into streamingsubscription(provider, priceMonth, type, userid, available, link) VALUES ($1, $2, $3, $4, false, NULL) RETURNING *;";
 export const createMobileSubscriptionQuery =
-  "insert into mobilesubscription(Provider, PriceMonth, DataMonth, Talktime, Userid, available) VALUES ($1, $2, $3, $4, $5, false) RETURNING *;";
+  "insert into mobilesubscription(provider, priceMonth, dataMonth, talktime, userId, available) VALUES ($1, $2, $3, $4, $5, false) RETURNING *;";
+export const createOtherSubscriptionQuery =
+  "insert into othersubscription(name, priceMonth, userId) VALUES ($1, $2, $3) RETURNING *;";
 
 // Delte queries
 export const deleteMobileSubscriptionQuery =
