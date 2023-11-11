@@ -6,15 +6,15 @@ const createBroadbandSubscription = async (req, res) => {
     return res.status(405).json({ message: "Method Not AllowedYOLO" });
   }
 
-  const { Provider, PriceMonth, uploadSpeed, downloadSpeed, Userid } = req.body;
+  const { provider, priceMonth, uploadSpeed, downloadSpeed, userid } = req.body;
 
   try {
     const results = await pool.query(createBroadbandSubscriptionQuery, [
-      Provider,
-      PriceMonth,
+      provider,
+      priceMonth,
       uploadSpeed,
       downloadSpeed,
-      Userid,
+      userid,
     ]);
     // Assuming the inserted row is the first row in the result set
     const insertedRow = results.rows[0];
