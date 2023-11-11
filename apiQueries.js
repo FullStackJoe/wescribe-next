@@ -11,6 +11,8 @@ export const addUserQuery = // Add a user to Users table, returning the created 
   "INSERT INTO users(userID) VALUES ($1) RETURNING *;";
 export const createBroadbandSubscriptionQuery = // Create broadband sub from provider, priceMonth, uploadSpeed, downloadSpeed, userId, returns the created sub
   "insert into broadbandsubscription(provider, priceMonth, uploadSpeed, downloadSpeed, userid, available, link) VALUES ($1, $2, $3, $4, $5, false, NULL) RETURNING *;";
+export const createStreamingSubscriptionQuery = // Create broadband sub from provider, priceMonth, uploadSpeed, downloadSpeed, userId, returns the created sub
+  "insert into streamingsubscription(provider, priceMonth, type, userid, available, link) VALUES ($1, $2, $3, $4, false, NULL) RETURNING *;";
 export const createMobileSubscriptionQuery =
   "insert into mobilesubscription(Provider, PriceMonth, DataMonth, Talktime, Userid, available) VALUES ($1, $2, $3, $4, $5, false) RETURNING *;";
 
