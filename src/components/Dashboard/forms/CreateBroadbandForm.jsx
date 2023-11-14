@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function MobileSubscriptionForm({
+export default function BroadbandSubscriptionForm({
   toggleEditMode,
   userId,
   onClose,
@@ -8,24 +8,22 @@ export default function MobileSubscriptionForm({
   onSubmitSuccess,
 }) {
   const [provider, setProvider] = useState("");
-  const [data, setData] = useState("");
-  const [talktime, setTalktime] = useState("");
+  const [uploadSpeed, setuploadSpeed] = useState("");
+  const [downloadSpeed, setdownloadSpeed] = useState("");
   const [price, setPrice] = useState("");
   const [erroMsg, setErrormsg] = useState("");
-  const [isTalktimeCheked, setIsTalktimeCheked] = useState(false);
-  const [isDataCheked, setIsisDataCheked] = useState(false);
 
   const submit = async () => {
     if (provider == "") {
       setErrormsg("Vælg venligst en udbyder");
       return;
     }
-    if (data == "") {
+    if (uploadSpeed == "") {
       setErrormsg("Angiv venligst data mængde");
       return;
     }
-    if (talktime == "") {
-      setErrormsg("Angiv venligst taletid");
+    if (downloadSpeed == "") {
+      setErrormsg("Angiv venligst data mængde");
       return;
     }
     if (price == "") {
@@ -34,12 +32,13 @@ export default function MobileSubscriptionForm({
     }
     const newSubscription = {
       subscriptionid: Math.random().toString(),
-      type: "mobile",
+      type: "internet",
       provider,
-      talktime: isTalktimeCheked ? 9999 : talktime,
-      datamonth: isDataCheked ? 9999 : data,
+      uploadSpeed,
+      downloadSpeed,
       pricemonth: price,
     };
+
     addSubscriptionOptimistically(newSubscription);
     onClose();
 
@@ -48,15 +47,15 @@ export default function MobileSubscriptionForm({
     // Create a JSON object with the selected data
     const formData = {
       provider: provider,
-      dataMonth: data,
-      talktime: talktime,
+      uploadSpeed: uploadSpeed,
+      downloadSpeed: downloadSpeed,
       priceMonth: price,
       userId: userId,
     };
 
     try {
       // Make a POST request to the endpoint
-      const response = await fetch("/api/createMobileSubscription", {
+      const response = await fetch("/api/createBroadbandSubscription", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,8 +70,8 @@ export default function MobileSubscriptionForm({
         onSubmitSuccess(responseData, newSubscription.subscriptionid);
 
         setProvider("");
-        setData("");
-        setTalktime("");
+        setuploadSpeed("");
+        setdownloadSpeed("");
         setPrice("");
       } else {
         // Handle the case where the request was not successful (e.g., show an error message)
@@ -83,24 +82,6 @@ export default function MobileSubscriptionForm({
     } catch (error) {
       // Handle any network or request errors
       console.error("Error:", error);
-    }
-  };
-
-  const handleTalktimeCheked = () => {
-    setIsTalktimeCheked((prev) => !prev);
-    if (!isTalktimeCheked) {
-      setTalktime(9999);
-    } else {
-      setTalktime("");
-    }
-  };
-
-  const handleDataCheked = () => {
-    setIsisDataCheked((prev) => !prev);
-    if (!isDataCheked) {
-      setData(9999);
-    } else {
-      setData("");
     }
   };
 
@@ -117,55 +98,36 @@ export default function MobileSubscriptionForm({
             <option disabled value="">
               Vælg
             </option>
-            <option value="CallMe">CallMe</option>
-            <option value="Oister">Oister</option>
-            <option value="Telmore">Telmore</option>
+            <option value="Hiper">Hiper</option>
+            <option value="FastSpeed">FastSpeed</option>
+            <option value="JetNet">JetNet</option>
             <option value="Telia">Telia</option>
-            <option value="Telenor">Telenor</option>
-            <option value="OK">OK</option>
-            <option value="Eesy">Eesy</option>
-            <option value="YouSee">YouSee</option>
-            <option value="Lebara">Lebara</option>
-            <option value="Flexii">Flexii</option>
-            <option value="Duka">Duka</option>
+            <option value="MaxSpeed">MaxSpeed</option>
+            <option value="KvikNet">OKvikNetK</option>
+            <option value="Stofa">Stofa</option>
+            <option value="YouSee">YouSeev</option>
           </select>
         </div>
-        <div className="flex flex-col items-center pt-3 w-2/12">
+        <div className="flex flex-col items-center pt-3 w-3/12">
           <div>
-            <p className="font-bold">Data</p>
-            Fri {"  "}
-            <input
-              type="checkbox"
-              checked={isDataCheked}
-              onClick={handleDataCheked}
-              className="toggle ml-2"
-            />
+            <p className="font-bold">Upload Hastighed</p>
           </div>
           <input
             type="text"
-            disabled={isDataCheked}
-            placeholder="GB"
+            placeholder="Mbit/s"
             className="input border-black input-bordered input-sm w-full max-w-xs"
-            onChange={(e) => setData(e.target.value)}
+            onChange={(e) => setuploadSpeed(e.target.value)}
           />
         </div>
-        <div className="flex flex-col items-center pt-3 w-2/12">
+        <div className="flex flex-col items-center pt-3 w-3/12">
           <div>
-            <p className="font-bold">Taletid</p>
-            Fri {"  "}
-            <input
-              type="checkbox"
-              checked={isTalktimeCheked}
-              onClick={handleTalktimeCheked}
-              className="toggle ml-2"
-            />
+            <p className="font-bold">Download Hastighed</p>
           </div>
           <input
             type="text"
-            disabled={isTalktimeCheked}
-            placeholder="timer"
+            placeholder="Mbit/s"
             className="input border-black input-bordered input-sm w-full max-w-xs"
-            onChange={(e) => setTalktime(e.target.value)}
+            onChange={(e) => setdownloadSpeed(e.target.value)}
           />
         </div>
         <div className="flex flex-col items-center pt-3 w-2/12">

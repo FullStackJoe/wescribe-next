@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-export default function SubscriptionCard({
+export default function SubscriptionCardMobile({
   setSubscriptionData,
   provider,
   data,
@@ -11,19 +11,37 @@ export default function SubscriptionCard({
   subscriptionId,
   discountMonths,
   discountPrice,
+  type,
 }) {
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   const handleDelete = () => {
     // Optimistically update the UI
-    setSubscriptionData((prevSubscriptionData) =>
-      prevSubscriptionData.filter(
-        (item) => item.subscriptionid !== subscriptionId
-      )
-    );
+    setSubscriptionData((prevSubscriptionData) => {
+      // Create a copy of the previous data
+      const updatedData = { ...prevSubscriptionData };
+
+      // Iterate through each category in SubscriptionData
+      for (const category in updatedData) {
+        if (updatedData.hasOwnProperty(category)) {
+          // Filter out the subscription with the given subscriptionId in the current category
+          updatedData[category] = updatedData[category].filter(
+            (item) => item.subscriptionid !== subscriptionId
+          );
+        }
+      }
+
+      return updatedData;
+    });
 
     // Define the endpoint and the request options
-    const url = "/api/deleteMobileSubscription/" + subscriptionId;
-
-    console.log(subscriptionId);
+    const url =
+      "/api/delete" +
+      capitalizeFirstLetter(type) +
+      "Subscription/" +
+      subscriptionId;
 
     const requestOptions = {
       method: "DELETE",
@@ -46,19 +64,31 @@ export default function SubscriptionCard({
       .catch((error) => {
         console.error("There was an error deleting the subscription:", error);
         // The request failed, revert the changes
-        setSubscriptionData((prevSubscriptionData) => [
-          ...prevSubscriptionData,
-          {
-            subscriptionid: subscriptionId,
-            provider: provider,
-            talktime: talk,
-            datamonth: data,
-            pricemonth: monthlyPrice,
-          },
-        ]);
+        setSubscriptionData((prevSubscriptionData) => {
+          // Create a copy of the previous data
+          const updatedData = { ...prevSubscriptionData };
+
+          // Iterate through each category in SubscriptionData
+          for (const category in updatedData) {
+            if (updatedData.hasOwnProperty(category)) {
+              // Add back the deleted subscription to the current category
+              updatedData[category] = [
+                ...updatedData[category],
+                {
+                  subscriptionid: subscriptionId,
+                  provider: provider,
+                  talktime: talk,
+                  datamonth: data,
+                  pricemonth: monthlyPrice,
+                },
+              ];
+            }
+          }
+
+          return updatedData;
+        });
       });
   };
-
   return (
     <>
       <div className="flex flex-col justify-between items-center w-[365px] relative">

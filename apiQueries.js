@@ -1,6 +1,16 @@
 // Get queries
 export const getSubscription = // Get data on a single subsription
   "SELECT *, 'mobile' AS category FROM mobilesubscription WHERE subscriptionId = $1;";
+
+export const getMobileByUserIdQuery =
+  "SELECT *, 'mobile' as type FROM MobileSubscription WHERE userid = $1;";
+export const getInternetByUserIdQuery =
+  "SELECT *, 'internet' as type FROM broadbandsubscription WHERE userid = $1";
+export const getStreamingByUserIdQuery =
+  "SELECT *, 'streaming' as type FROM StreamingSubscription WHERE userid = $1";
+export const getOtherByUserIdQuery =
+  "SELECT *, 'other' as type FROM OtherSubscription WHERE userid = $1";
+
 export const getSubscriptionsByUserIdQuery = // Get all subscriptions assigned a specific user
   "SELECT subscriptionid, provider, pricemonth, userid, available, link, datamonth, talktime, NULL AS uploadspeed, NULL AS downloadspeed, NULL AS type, 'mobile' as category FROM mobilesubscription WHERE userid = $1 UNION ALL SELECT subscriptionid, provider, pricemonth, userid, available, link, NULL AS datamonth, NULL AS talktime, uploadspeed, downloadspeed, NULL AS type, 'broadband' as category FROM broadbandsubscription WHERE userid = $1 UNION ALL SELECT subscriptionid, provider, pricemonth, userid, available, link, NULL AS datamonth, NULL AS talktime, NULL AS uploadspeed, NULL AS downloadspeed, type, 'streaming' as category FROM streamingsubscription WHERE userid = $1;";
 export const getCheaperMobileAlternativeQuery = // Get 3 alternative mobile subs with lower/equal price, more/equal data, more/queal talktime, which are available. Joins the disocunt_price and discount_month if any are valid ATM. sorted by price
@@ -12,7 +22,7 @@ export const addUserQuery = // Add a user to Users table, returning the created 
 export const createBroadbandSubscriptionQuery = // Create broadband sub from provider, priceMonth, uploadSpeed, downloadSpeed, userId, returns the created sub
   "insert into broadbandsubscription(provider, priceMonth, uploadSpeed, downloadSpeed, userid, available, link) VALUES ($1, $2, $3, $4, $5, false, NULL) RETURNING *;";
 export const createStreamingSubscriptionQuery = // Create broadband sub from provider, priceMonth, uploadSpeed, downloadSpeed, userId, returns the created sub
-  "insert into streamingsubscription(provider, priceMonth, type, userid, available, link) VALUES ($1, $2, $3, $4, false, NULL) RETURNING *;";
+  "insert into streamingsubscription(provider, priceMonth, plan, userid, available, link) VALUES ($1, $2, $3, $4, false, NULL) RETURNING *;";
 export const createMobileSubscriptionQuery =
   "insert into mobilesubscription(provider, priceMonth, dataMonth, talktime, userId, available) VALUES ($1, $2, $3, $4, $5, false) RETURNING *;";
 export const createOtherSubscriptionQuery =
@@ -21,6 +31,10 @@ export const createOtherSubscriptionQuery =
 // Delte queries
 export const deleteMobileSubscriptionQuery =
   "DELETE FROM mobilesubscription WHERE subscriptionId = $1;";
+export const deleteInternetSubscriptionQuery =
+  "DELETE FROM broadbandsubscription WHERE subscriptionId = $1;";
+export const deleteStreamingSubscriptionQuery =
+  "DELETE FROM streamingsubscription WHERE subscriptionId = $1;";
 
 /*
   export const getCheaperInternetAlternativeQuery =

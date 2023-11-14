@@ -6,13 +6,13 @@ const createStreamingSubscription = async (req, res) => {
     return res.status(405).json({ message: "Method Not AllowedYOLO" });
   }
 
-  const { provider, priceMonth, type, userId } = req.body;
+  const { provider, priceMonth, plan, userId } = req.body;
 
   try {
     const results = await pool.query(createStreamingSubscriptionQuery, [
       provider,
       priceMonth,
-      type,
+      plan,
       userId,
     ]);
     // Assuming the inserted row is the first row in the result set

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function MobileSubscriptionForm({
+export default function BroadbandSubscriptionForm({
   toggleEditMode,
   userId,
   onClose,
@@ -8,24 +8,17 @@ export default function MobileSubscriptionForm({
   onSubmitSuccess,
 }) {
   const [provider, setProvider] = useState("");
-  const [data, setData] = useState("");
-  const [talktime, setTalktime] = useState("");
+  const [plan, setPlan] = useState("");
   const [price, setPrice] = useState("");
   const [erroMsg, setErrormsg] = useState("");
-  const [isTalktimeCheked, setIsTalktimeCheked] = useState(false);
-  const [isDataCheked, setIsisDataCheked] = useState(false);
 
   const submit = async () => {
     if (provider == "") {
       setErrormsg("Vælg venligst en udbyder");
       return;
     }
-    if (data == "") {
+    if (plan == "") {
       setErrormsg("Angiv venligst data mængde");
-      return;
-    }
-    if (talktime == "") {
-      setErrormsg("Angiv venligst taletid");
       return;
     }
     if (price == "") {
@@ -34,12 +27,12 @@ export default function MobileSubscriptionForm({
     }
     const newSubscription = {
       subscriptionid: Math.random().toString(),
-      type: "mobile",
+      type: "streaming",
       provider,
-      talktime: isTalktimeCheked ? 9999 : talktime,
-      datamonth: isDataCheked ? 9999 : data,
+      plan,
       pricemonth: price,
     };
+
     addSubscriptionOptimistically(newSubscription);
     onClose();
 
@@ -48,15 +41,15 @@ export default function MobileSubscriptionForm({
     // Create a JSON object with the selected data
     const formData = {
       provider: provider,
-      dataMonth: data,
-      talktime: talktime,
+      plan: plan,
       priceMonth: price,
       userId: userId,
     };
 
     try {
       // Make a POST request to the endpoint
-      const response = await fetch("/api/createMobileSubscription", {
+      console.log(plan);
+      const response = await fetch("/api/createStreamingSubscription", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,8 +64,7 @@ export default function MobileSubscriptionForm({
         onSubmitSuccess(responseData, newSubscription.subscriptionid);
 
         setProvider("");
-        setData("");
-        setTalktime("");
+        setPlan("");
         setPrice("");
       } else {
         // Handle the case where the request was not successful (e.g., show an error message)
@@ -83,24 +75,6 @@ export default function MobileSubscriptionForm({
     } catch (error) {
       // Handle any network or request errors
       console.error("Error:", error);
-    }
-  };
-
-  const handleTalktimeCheked = () => {
-    setIsTalktimeCheked((prev) => !prev);
-    if (!isTalktimeCheked) {
-      setTalktime(9999);
-    } else {
-      setTalktime("");
-    }
-  };
-
-  const handleDataCheked = () => {
-    setIsisDataCheked((prev) => !prev);
-    if (!isDataCheked) {
-      setData(9999);
-    } else {
-      setData("");
     }
   };
 
@@ -117,57 +91,31 @@ export default function MobileSubscriptionForm({
             <option disabled value="">
               Vælg
             </option>
-            <option value="CallMe">CallMe</option>
-            <option value="Oister">Oister</option>
-            <option value="Telmore">Telmore</option>
-            <option value="Telia">Telia</option>
-            <option value="Telenor">Telenor</option>
-            <option value="OK">OK</option>
-            <option value="Eesy">Eesy</option>
-            <option value="YouSee">YouSee</option>
-            <option value="Lebara">Lebara</option>
-            <option value="Flexii">Flexii</option>
-            <option value="Duka">Duka</option>
+            <option value="Netflix">Netflix</option>
+            <option value="Disney +">Disney</option>
+            <option value="TV2 Play">TV2 Play</option>
+            <option value="Amazon Prime">Amazon Prime</option>
+            <option value="ViaPlay">ViaPlay</option>
           </select>
         </div>
-        <div className="flex flex-col items-center pt-3 w-2/12">
+        <div className="flex flex-col items-center pt-3 w-3/12">
           <div>
-            <p className="font-bold">Data</p>
-            Fri {"  "}
-            <input
-              type="checkbox"
-              checked={isDataCheked}
-              onClick={handleDataCheked}
-              className="toggle ml-2"
-            />
+            <p className="font-bold">Pakke</p>
           </div>
-          <input
-            type="text"
-            disabled={isDataCheked}
-            placeholder="GB"
-            className="input border-black input-bordered input-sm w-full max-w-xs"
-            onChange={(e) => setData(e.target.value)}
-          />
+          <select
+            className="select select-bordered border-black select-sm w-full max-w-xs"
+            onChange={(e) => setPlan(e.target.value)}
+            value={plan}
+          >
+            <option disabled value="">
+              Vælg
+            </option>
+            <option value="Super">Super</option>
+            <option value="Mellem">Mellem</option>
+            <option value="Lille">Lille</option>
+          </select>
         </div>
-        <div className="flex flex-col items-center pt-3 w-2/12">
-          <div>
-            <p className="font-bold">Taletid</p>
-            Fri {"  "}
-            <input
-              type="checkbox"
-              checked={isTalktimeCheked}
-              onClick={handleTalktimeCheked}
-              className="toggle ml-2"
-            />
-          </div>
-          <input
-            type="text"
-            disabled={isTalktimeCheked}
-            placeholder="timer"
-            className="input border-black input-bordered input-sm w-full max-w-xs"
-            onChange={(e) => setTalktime(e.target.value)}
-          />
-        </div>
+
         <div className="flex flex-col items-center pt-3 w-2/12">
           <p className="font-bold">Pris / md</p>
           <input

@@ -6,15 +6,15 @@ const createMobileSubscription = async (req, res) => {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { Provider, PriceMonth, DataMonth, Talktime, Userid } = req.body;
+  const { provider, priceMonth, dataMonth, talktime, userId } = req.body;
 
   try {
     const results = await pool.query(createMobileSubscriptionQuery, [
-      Provider,
-      PriceMonth,
-      DataMonth,
-      Talktime,
-      Userid,
+      provider,
+      priceMonth,
+      dataMonth,
+      talktime,
+      userId,
     ]);
     // Assuming the inserted row is the first row in the result set
     const insertedRow = results.rows[0];

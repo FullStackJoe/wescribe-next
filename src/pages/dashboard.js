@@ -1,7 +1,7 @@
 import Login from "./login";
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
-import SubscriptionCard from "@/components/Dashboard/SubscriptionCard";
+import SubscriptionCardMobile from "@/components/Dashboard/SubscriptionCardMobile";
 import OverviewCard from "@/components/Dashboard/OverviewCard";
 import CreateModal from "@/components/Dashboard/CreateModal";
 import { useAuth } from "@/firebase/AuthContext";
@@ -16,20 +16,41 @@ export default function Dashboard() {
   const [editMode, setEditMode] = useState(false);
 
   const addSubscriptionOptimistically = (newSubscription) => {
-    setSubscriptionData((prevSubscriptionData) => [
-      ...prevSubscriptionData,
-      newSubscription,
-    ]);
+    setSubscriptionData((prevSubscriptionData) => {
+      // Extract the category from the new subscription
+      const category = newSubscription.type;
+
+      // Create a copy of the previous data
+      const newData = { ...prevSubscriptionData };
+
+      // Add the new subscription to the specified category
+      newData[category] = [...newData[category], newSubscription];
+
+      return newData;
+    });
   };
 
   const onSubmitSuccess = (responseData, subTempId) => {
-    setSubscriptionData((prevSubscriptionData) =>
-      prevSubscriptionData.map((subscription) =>
-        subscription.subscriptionid === subTempId
-          ? { ...subscription, subscriptionid: responseData.subscriptionid }
-          : subscription
-      )
-    );
+    setSubscriptionData((prevSubscriptionData) => {
+      const updatedData = { ...prevSubscriptionData };
+
+      // Iterate through each category in SubscriptionData
+      for (const category in updatedData) {
+        if (updatedData.hasOwnProperty(category)) {
+          // Find the subscription with subTempId in the current category
+          const updatedCategory = updatedData[category].map((subscription) =>
+            subscription.subscriptionid === subTempId
+              ? { ...subscription, subscriptionid: responseData.subscriptionid }
+              : subscription
+          );
+
+          // Update the current category with the updated subscriptions
+          updatedData[category] = updatedCategory;
+        }
+      }
+
+      return updatedData;
+    });
   };
 
   const openModal = () => {
@@ -112,7 +133,8 @@ export default function Dashboard() {
               <div className="flex flex-col items-center ">
                 <div>
                   {/* Button for editing subs (if user has subs) */}
-                  {SubscriptionData[0] ? (
+                  {SubscriptionData.mobile[0] ||
+                  SubscriptionData.internet[0] ? (
                     <button
                       onClick={toggleEditMode}
                       class="bg-[#008B74] hover:bg-blue-600 text-sm text-white font-bold py-2 px-4 mx-2 rounded inline-flex items-center mt-5 "
@@ -138,21 +160,86 @@ export default function Dashboard() {
                     ""
                   )}
                 </div>
-                <div className="flex flex-wrap justify-center">
-                  {SubscriptionData.map((item) => (
-                    <div className="px-6 py-5" key={item.subscriptionid}>
-                      <SubscriptionCard
-                        setSubscriptionData={setSubscriptionData}
-                        provider={item.provider}
-                        talk={item.talktime === 9999 ? "FRI" : item.talktime}
-                        data={item.datamonth === 9999 ? "FRI" : item.datamonth}
-                        monthlyPrice={parseInt(item.pricemonth)}
-                        editMode={editMode}
-                        subscriptionId={item.subscriptionid}
-                        discount={item.discount}
-                      />
+
+                <div className="flex flex-wrap justify-center mt-5">
+                  {SubscriptionData.mobile[0] ? (
+                    <div className="text-center">
+                      <p className="text-xl md:text-3xl">Mobil </p>
+                      {SubscriptionData.mobile.map((item) => (
+                        <div className="px-6 py-5" key={item.subscriptionid}>
+                          <SubscriptionCardMobile
+                            setSubscriptionData={setSubscriptionData}
+                            provider={item.provider}
+                            talk={
+                              item.talktime === 9999 ? "FRI" : item.talktime
+                            }
+                            data={
+                              item.datamonth === 9999 ? "FRI" : item.datamonth
+                            }
+                            monthlyPrice={parseInt(item.pricemonth)}
+                            editMode={editMode}
+                            subscriptionId={item.subscriptionid}
+                            discount={item.discount}
+                            type={item.type}
+                          />
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  ) : (
+                    ""
+                  )}
+                  {SubscriptionData.internet[0] ? (
+                    <div className="text-center">
+                      <p className="text-xl md:text-3xl">Internet </p>
+                      {SubscriptionData.internet.map((item) => (
+                        <div className="px-6 py-5" key={item.subscriptionid}>
+                          <SubscriptionCardMobile
+                            setSubscriptionData={setSubscriptionData}
+                            provider={item.provider}
+                            talk={
+                              item.talktime === 9999 ? "FRI" : item.talktime
+                            }
+                            data={
+                              item.datamonth === 9999 ? "FRI" : item.datamonth
+                            }
+                            monthlyPrice={parseInt(item.pricemonth)}
+                            editMode={editMode}
+                            subscriptionId={item.subscriptionid}
+                            discount={item.discount}
+                            type={item.type}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {SubscriptionData.streaming[0] ? (
+                    <div className="text-center">
+                      <p className="text-xl md:text-3xl">Streaming </p>
+                      {SubscriptionData.streaming.map((item) => (
+                        <div className="px-6 py-5" key={item.subscriptionid}>
+                          <SubscriptionCardMobile
+                            setSubscriptionData={setSubscriptionData}
+                            provider={item.provider}
+                            talk={
+                              item.talktime === 9999 ? "FRI" : item.talktime
+                            }
+                            data={
+                              item.datamonth === 9999 ? "FRI" : item.datamonth
+                            }
+                            monthlyPrice={parseInt(item.pricemonth)}
+                            editMode={editMode}
+                            subscriptionId={item.subscriptionid}
+                            discount={item.discount}
+                            type={item.type}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </>

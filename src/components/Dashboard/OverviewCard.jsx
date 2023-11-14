@@ -11,13 +11,21 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
     total: 0,
   };
 
-  const monthlyPrices = SubscriptionData.reduce((acc, item) => {
-    if (item.category in acc) {
-      acc[item.category] += parseFloat(item.pricemonth);
-      acc.Total += parseFloat(item.pricemonth);
-    }
-    return acc;
-  }, initialPriceObject);
+  const monthlyPrices = Object.keys(SubscriptionData).reduce(
+    (acc, category) => {
+      const categoryTotal = SubscriptionData[category].reduce((total, item) => {
+        return total + parseFloat(item.pricemonth);
+      }, 0);
+
+      acc[category] = categoryTotal;
+      acc.total += categoryTotal;
+
+      return acc;
+    },
+    initialPriceObject
+  );
+
+  console.log();
 
   const onClickYear = () => {
     setYearly(true); // Toggle the value of yearly
@@ -69,7 +77,7 @@ export default function OverviewCard({ SubscriptionData, currentUser }) {
                   </p>
                 </div>
                 <div className="flex flex-col w-1/2 lg:w-2/12 items-center pt-7">
-                  <p>Bredbånd</p>
+                  <p>Internet</p>
                   <p className="text-2xl pt-2 text-[#BD0060]">
                     {!yearly
                       ? monthlyPrices.internet

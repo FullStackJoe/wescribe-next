@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import SubscriptionCard from "../Dashboard/SubscriptionCard";
+import SubscriptionCard from "../Dashboard/SubscriptionCardMobile";
 import NoCheaperSubs from "./NoCheaperSubs";
 import styles from "./AlternativesMobile.module.css";
 import Savings from "./Savings";
 
 function AlternativesMobile({ AltSubscriptionData }) {
   const [indices, setIndices] = useState({}); // Step 1: Initialize a state variable for indices
+
   console.log(AltSubscriptionData);
   const handleButtonClick = (subArrayIndex) => {
     setIndices((prevIndices) => {

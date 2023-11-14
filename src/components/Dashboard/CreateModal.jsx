@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import CreateMobileForm from "./forms/CreateMobileForm";
+import CreateBroadbandForm from "./forms/CreateBroadbandForm";
+import CreateStreamingForm from "./forms/CreateStreamingForm";
 import styles from "./CreateModal.module.css";
 // import OtherForm from "./forms/OtherForm";
-// import BroadbandForm from "./forms/BroadbandForm";
 // import StreamingForm from "./forms/StreamingForm";
 
 const CreateModal = ({
@@ -28,23 +29,25 @@ const CreateModal = ({
             onClose={onClose}
           />
         );
-      case "Bredbånd":
+      case "Internet":
         return (
-          <div className="flex flex-col items-center">
-            <p className="mt-6 mb-2">
-              Denne feature er ikke implementeret endnu
-            </p>
-            <p>Tilføj istedet et mobilabonnement</p>
-          </div>
+          <CreateBroadbandForm
+            onSubmitSuccess={onSubmitSuccess}
+            addSubscriptionOptimistically={addSubscriptionOptimistically}
+            toggleEditMode={toggleEditMode}
+            userId={userId}
+            onClose={onClose}
+          />
         );
       case "Streaming":
         return (
-          <div className="flex flex-col items-center">
-            <p className="mt-6 mb-2">
-              Denne feature er ikke implementeret endnu
-            </p>
-            <p>Tilføj istedet et mobilabonnement</p>
-          </div>
+          <CreateStreamingForm
+            onSubmitSuccess={onSubmitSuccess}
+            addSubscriptionOptimistically={addSubscriptionOptimistically}
+            toggleEditMode={toggleEditMode}
+            userId={userId}
+            onClose={onClose}
+          />
         );
       case "Anden kategori":
         return (
@@ -105,7 +108,7 @@ const CreateModal = ({
                   Vælg abonnements type
                 </option>
                 <option value="Mobilabonnement">Mobilabonnement</option>
-                <option value="Bredbånd">Bredbånd</option>
+                <option value="Internet">Internet</option>
                 <option value="Streaming">Streaming</option>
                 <option value="Anden kategori">Anden kategori</option>
               </select>

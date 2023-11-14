@@ -26,7 +26,7 @@ export default function AlternativeSubscriptions() {
       .then((fetchedData) => {
         setSubscriptionData(fetchedData);
         return Promise.all(
-          fetchedData.map((sub) =>
+          fetchedData.mobile.map((sub) =>
             fetch("/api/getAlternativeSub/" + sub.subscriptionid)
               .then((response) => response.json())
               .then((alternativeData) => {
@@ -84,7 +84,7 @@ export default function AlternativeSubscriptions() {
             />
           </div>
         ) : // IF user has no subs show hasNoSubs component
-        SubscriptionData.length == 0 ? (
+        SubscriptionData.mobile.length == 0 ? (
           <HasNoSubs />
         ) : (
           // if user has subs show HasSubs component
